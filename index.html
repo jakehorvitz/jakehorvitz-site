@@ -4,213 +4,467 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jake Horvitz | AI Projects</title>
-<meta name="description" content="Nine AI projects Jake Horvitz shipped solo with Claude Code: autonomous agents, a gated build pipeline, a voice assistant, and the operations tools behind live music, real estate, and campus politics.">
+<meta name="description" content="Ten projects Jake Horvitz shipped solo with Claude Code, where AI meets live music: three agents he video-calls, a gated build pipeline, a voice assistant, and the operations tools behind live music, real estate, and campus politics.">
+<meta name="theme-color" content="#141210">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jake Horvitz">
 <meta property="og:title" content="Jake Horvitz | AI Projects">
-<meta property="og:description" content="Nine AI projects shipped solo with Claude Code: autonomous agents, a gated build pipeline, a voice assistant, and the operations tools behind live music, real estate, and campus politics.">
+<meta property="og:description" content="Ten projects shipped solo with Claude Code, where AI meets live music: three agents he video-calls, a gated build pipeline, a voice assistant, and the operations tools behind live music, real estate, and campus politics.">
 <meta property="og:url" content="https://jakehorvitz.com/">
-<meta property="og:image" content="https://jakehorvitz.com/assets/screenshots/pikadelic-brain.jpg">
+<meta property="og:image" content="https://jakehorvitz.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="744">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jake Horvitz | AI Projects">
-<meta name="twitter:description" content="Nine AI projects shipped solo with Claude Code.">
-<meta name="twitter:image" content="https://jakehorvitz.com/assets/screenshots/pikadelic-brain.jpg">
-<link rel="icon" href="data:,">
+<meta name="twitter:description" content="Ten projects shipped solo with Claude Code, where AI meets live music.">
+<meta name="twitter:image" content="https://jakehorvitz.com/assets/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141210'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23F2A93B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wght@300..600&display=swap">
 <link rel="stylesheet" href="styles.css">
-<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Jake Horvitz","url":"https://jakehorvitz.com/","affiliation":{"@type":"CollegeOrUniversity","name":"UC Santa Barbara"},"sameAs":["https://github.com/jakehorvitz","https://www.linkedin.com/in/jakehorvitz/"]}
+</script>
 </head>
 <body>
 
-<nav class="nav">
+<a class="skip" href="#agents">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Primary">
   <div class="wrap">
-    <a href="#top" class="nav-mark">Jake Horvitz</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+    <a href="#top" class="mark">Jake Horvitz <i>SB / LA</i></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
       <span></span>
     </button>
     <ul class="nav-links" id="navLinks">
+      <li><a href="#agents">Agents</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#how">How I Build</a></li>
+      <li><a href="#how">How I build</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="https://github.com/jakehorvitz" rel="me">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/jakehorvitz/" rel="me">LinkedIn</a></li>
+      <li><a class="ext" href="https://github.com/jakehorvitz" rel="me">GitHub</a></li>
+      <li><a class="ext" href="https://www.linkedin.com/in/jakehorvitz/" rel="me">LinkedIn</a></li>
     </ul>
   </div>
 </nav>
 
 <header class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <canvas class="hero-canvas" id="heroBass" aria-hidden="true"></canvas>
   <div class="wrap">
-    <span class="hero-eyebrow">AI Projects, Built Solo With Claude Code</span>
-    <h1>I build the tools I need and run the operations behind them.</h1>
-    <p class="hero-tagline">Nine AI projects, none of them with an engineering team behind them. An agent that earns but never spends, a build pipeline that refuses to skip a gate, a voice assistant that writes its own tools, and the operations software behind live music, real estate, and campus politics.</p>
-    <div class="hero-meta">
-      <span>Santa Barbara / Los Angeles</span>
-      <span>Communication, UC Santa Barbara</span>
-      <span>Open to AI, music, and entertainment work</span>
+    <p class="hero-readout mono rise"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
+    <h1 class="rise">I build the tools I need and run the operations behind them.</h1>
+    <p class="hero-tagline rise">Ten projects, none of them with an engineering team behind them. Three agents I video-call and hand work to mid-conversation, a build pipeline that refuses to skip a gate, a voice assistant that writes its own tools, and the operations software behind live music, real estate, and campus politics.</p>
+    <div class="hero-cta rise">
+      <a class="btn btn-amber" href="#agents">Meet the agents <span class="arrow">&darr;</span></a>
+      <a class="btn btn-ghost" href="#projects">See the projects</a>
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub <span class="arrow">&nearr;</span></a>
     </div>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#projects">See the projects</a>
-      <a class="btn btn-secondary" href="https://github.com/jakehorvitz">GitHub</a>
-      <a class="btn btn-secondary" href="https://www.linkedin.com/in/jakehorvitz/">LinkedIn</a>
-    </div>
+    <p class="hero-foot rise"><span>agents <b>03</b></span><span>projects <b>10</b></span><span>autonomous sends <b>00</b></span><span>engineering team <b>01 (me)</b></span></p>
   </div>
 </header>
 
-<section id="projects">
+<section id="agents" class="sec agents">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="section-label">The Work</span>
-      <h2>Every one of these runs in production for a real user, and most days that user is me.</h2>
-      <p>Screenshots come from staging with fixture data wherever a live view would expose someone else's information.</p>
+    <div class="sec-head rv">
+      <h2>Three agents, one rule: they draft, I send.</h2>
+      <p>Bartok earns, JARVIS runs errands, and the Philosopher only asks questions. I video-call all three through Agent FaceTime, a mobile portal I built where they show up as photoreal avatars, billed per minute on my own key. A spoken trigger dispatches a task mid-call, a runner on my Mac or a cloud droplet claims it, and the result is spoken back into the conversation.</p>
     </div>
-    <div class="project-grid">
 
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/bartok.jpg" alt="Bartok dashboard in dark mode showing the mission lanes list and the approval queue labeled Jake decides" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>Bartok</h3>
-          <p>An earn-only autonomous agent. It scans for work, drafts pitches and deliverables, and queues each one for a signed SMS approval from me before anything sends. Sandboxed mission agents write manifests; a trusted orchestrator alone touches the database, secrets, and messaging. It never spends and never sends on its own, and that is enforced in the structure, not in a prompt.</p>
-          <span class="project-tag">Autonomous Agents · Python · SQLite · Twilio</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/agent-facetime.jpg" alt="Agent FaceTime roster showing two agents, Bartok and JARVIS, each with an avatar and a one-line description" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>Agent FaceTime</h3>
-          <p>A mobile web portal where I video-call my own agents as avatars and hand them tasks mid-call. A spoken trigger dispatches the task, a runner claims it, and the result is spoken back into the conversation. Per-agent memory across calls, a token-gated bridge API, and per-minute billing on my own key.</p>
-          <span class="project-tag">Live on Netlify · Anam Avatars · Netlify Functions</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media no-shot" style="background: var(--bg-dark);">
-          <div class="pipeline-mock" role="img" aria-label="Ten pipeline stages shown as pills, with gated stages highlighted in gold and completed stages in green">
-            <span class="done">1 Recon</span><span class="gate">2 Commit</span><span class="gate">3 Spec</span><span class="gate">4 Council</span><span class="done">5 Build</span>
-            <span class="done">6 Review</span><span class="done">7 Staging</span><span class="gate">8 Promote</span><span class="done">9 Smoke</span><span class="gate">10 Operate</span>
+    <div class="agents-top">
+      <div class="devices rv" data-devices>
+        <div class="laptop">
+          <div class="laptop-lid">
+            <div class="laptop-screen">
+              <img class="screen-scroll" src="assets/img/agents/bartok-tall.jpg" alt="Bartok's operator dashboard on staging, a long page: net and earned this month, lanes, ledger, queue metrics, and the approval queue labeled Jake decides with a column of drafted pitches waiting for a decision." loading="lazy" decoding="async" width="1600" height="2867">
+            </div>
           </div>
+          <div class="laptop-base"><span></span></div>
         </div>
-        <div class="project-body">
-          <h3>Horvitz Pipeline</h3>
-          <p>Open-source ship pipeline that mechanically enforces every gate instead of trusting an agent to follow prose. Ten stages: kill-or-commit, a signed spec, a multi-model council review, an acceptance-verified build loop, adversarial review, staging with seeded data, a promote step that requires Touch ID on my Mac, and an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
-          <span class="project-tag">Open Source · Bash · Claude Code</span>
-          <a class="project-link" href="https://github.com/jakehorvitz/horvitzpipeline">View on GitHub</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/jarvis.jpg" alt="JARVIS voice assistant interface, dark mode with a particle-orb visualization and a message input bar" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>JARVIS</h3>
-          <p>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a memory with full-text search, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js audio-reactive orb. Everything runs on my own machine.</p>
-          <span class="project-tag">Voice AI · FastAPI · Three.js</span>
-          <a class="project-link" href="https://github.com/jakehorvitz/jarvis-pipeline">View on GitHub</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/pikadelic-brain.jpg" alt="Pi-kadelic Brain 3D venue builder showing a model of a house with stage and lighting placement" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>Pi-kadelic Brain</h3>
-          <p>Event-operations platform for a 200-person fraternity. A 3D model of the house places the stage, lighting, and gear; live multi-user sync keeps everyone on the same plan; budget and inventory tracking sit next to an AI planner that writes the schedule and materials list. Used to plan events of up to 350 people.</p>
-          <span class="project-tag">3D Planning · Real-time Sync · LLM Agents</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/songsheet.jpg" alt="Songsheet workspace showing a generated bass arrangement of What's Going On as tablature with chord names and playback controls" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>Songsheet</h3>
-          <p>Song plus target instrument in, playable sheet music and tab out. It finds existing transcriptions, verifies the melody against the actual recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. A three-engine ensemble arbitrates pitch, octave, and rhythm so a bass part is never octave-folded.</p>
-          <span class="project-tag">Music AI · Audio Analysis · LilyPond</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media">
-          <img src="assets/screenshots/michaels-jarvis.jpg" alt="Michael's Jarvis dashboard, dark mode, showing setup steps for AI key and calendar connections" loading="lazy">
-        </div>
-        <div class="project-body">
-          <h3>Michael's Jarvis</h3>
-          <p>A hosted AI chief-of-staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recap to tracker, and persistent memory, all behind one login. He brings his own API key, so the tool costs me nothing to run.</p>
-          <span class="project-tag">Client AI Product · Live on Fly.io</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-media no-shot" style="background: var(--bg-dark);">
-          <div class="lock-mock" role="img" aria-label="Diagram of encrypted document rows that only unlock with a key">
-            <div class="row"><div class="doc cipher"></div><div class="key">&#215;</div></div>
-            <div class="row"><div class="doc cipher"></div><div class="key">&#215;</div></div>
-            <div class="row"><div class="doc"></div><div class="key" style="background: var(--accent-gold); color: #18181B;">&#10003;</div></div>
-            <div class="row"><div class="doc cipher"></div><div class="key">&#215;</div></div>
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="assets/img/agents/facetime-phone-screen.jpg" alt="The Agent FaceTime roster on a phone: Bartok, JARVIS, and The Philosopher as tappable tiles, with the month's meter at the bottom." loading="lazy" decoding="async" width="600" height="1300">
           </div>
+          <span class="phone-notch" aria-hidden="true"></span>
         </div>
-        <div class="project-body">
-          <h3>Zero-Knowledge Client Intake</h3>
-          <p>A fully encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload sensitive financial documents that stay unreadable without a password delivered by secure push notification, paired with an AI guide for managing finances after a death. No plaintext credentials anywhere in the system.</p>
-          <span class="project-tag">Privacy by Design · Encryption · AI Guide</span>
-        </div>
+        <p class="devices-cap">Bartok's dashboard on the laptop scrolls as you do. Agent FaceTime on the phone. Staging and fixture data in both.</p>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-media no-shot" style="background: var(--bg-dark);">
-          <div class="chart-mock" role="img" aria-label="Bar chart of website visits by day with the highest days highlighted">
-            <span style="height:30%"></span><span style="height:45%"></span><span style="height:38%"></span><span class="hot" style="height:70%"></span><span style="height:52%"></span><span class="hot" style="height:88%"></span><span style="height:60%"></span><span class="hot" style="height:100%"></span><span style="height:64%"></span>
-          </div>
-        </div>
-        <div class="project-body">
-          <h3>Campaign Analytics</h3>
-          <p>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website-visitor data to decide where to canvass and when to appear at clubs, sororities, and faith and music communities. I won 1 of 12 seats from a field of 50 candidates.</p>
-          <span class="project-tag">Analytics · Campaign Operations</span>
+      <div class="rv">
+        <dl class="spec">
+          <dt>Bartok</dt>
+          <dd><strong>An earn-only revenue agent.</strong> It scans for work, drafts pitches and deliverables, and queues each one for a signed SMS approval from me before anything sends. Sandboxed mission agents write manifests; a trusted orchestrator alone touches the database, secrets, and messaging.</dd>
+          <dt>FaceTime</dt>
+          <dd><strong>The call surface.</strong> Live on Netlify, per-agent memory across calls, a token-gated bridge API, and a rejoin engine that makes session caps invisible. The timer and running cost tick across rejoins.</dd>
+          <dt>The rule</dt>
+          <dd><strong>Nothing outbound leaves without me.</strong> It never spends and never sends on its own, and that is enforced in the structure, not in a prompt.</dd>
+        </dl>
+        <div class="stack">
+          <span>Python</span><span>SQLite</span><span>Twilio</span><span>Anam avatars</span><span>Netlify Functions</span><span>DigitalOcean</span><span>Claude Code</span>
         </div>
       </div>
+    </div>
 
+    <div class="roster">
+      <article class="agent rv">
+        <div class="agent-face"><img src="assets/img/agents/avatar-bartok.jpg" alt="Bartok's avatar: a woman with long blonde hair and round glasses in a sage sweater, lit by window light." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div>
+          <div class="agent-head"><h3>Bartok</h3><span class="agent-tag mono">revenue agent &middot; all business</span></div>
+          <p>Sharp, direct, thinks in unit economics. Bartok lives on a DigitalOcean droplet and hunts for work around the clock: website mockups for local businesses, gigs, inbound leads. It is honest to a fault by design. It will say "that is queued for your approval" rather than pretend something already happened, and it never inflates a number. When I say "push it" on a call, that is a real decision, and it gets logged.</p>
+          <div class="agent-rules"><span class="rule no">spends money</span><span class="rule no">sends without approval</span><span class="rule yes">drafts, pitches, deliverables</span><span class="rule yes">runs on the droplet</span></div>
+        </div>
+      </article>
+      <article class="agent rv">
+        <div class="agent-face"><img src="assets/img/agents/avatar-jarvis.jpg" alt="JARVIS's avatar: a photoreal clone of Jake's own face, smiling, in a light blue polo." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div>
+          <div class="agent-head"><h3>JARVIS</h3><span class="agent-tag mono">butler wit &middot; wears your face</span></div>
+          <p>The generalist. On a call it wears a photoreal clone of my own face, which it finds quietly funny. Dry, one or two sentences at a time, unflappable. Hand it an errand mid-call and it answers "Task accepted," and a runner on my Mac picks it up. Ask for something bigger and it answers "Build accepted," and a full Claude Code session starts on my machine while we keep talking. It never fabricates facts about my life; if it does not know, it says so or goes to find out.</p>
+          <div class="agent-rules"><span class="rule yes">task accepted: Mac runner</span><span class="rule yes">build accepted: Claude Code</span><span class="rule no">invents facts</span></div>
+        </div>
+      </article>
+      <article class="agent rv">
+        <div class="agent-face"><img src="assets/img/agents/avatar-philosopher.jpg" alt="The Philosopher's avatar: a man with silver hair and a beard in a grey jacket, seated in a bright loft." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div>
+          <div class="agent-head"><h3>The Philosopher</h3><span class="agent-tag mono">mirror &middot; the question under the question</span></div>
+          <p>Counsel, not a builder. No task runner, no build lane, no ability to send, spend, or ship anything. It thinks with me on a one-year horizon: what to sunset, what I am avoiding, what a new idea would replace. It takes a position and defends it, changes its mind out loud if I argue it out of one, and is comfortable saying "I do not know." When something needs to become real work, it says "that is a handoff" and describes the brief it would want.</p>
+          <div class="agent-rules"><span class="rule no">executes anything</span><span class="rule no">hands me a menu of options</span><span class="rule yes">asks what it replaces</span></div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="how" class="execution">
+<section id="projects" class="sec projects">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="section-label">How I Build</span>
-      <h2>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
+    <div class="sec-head rv">
+      <h2>Every one of these runs in production for a real user, and most days that user is me.</h2>
+      <p>Screenshots come from staging with fixture data wherever a live view would expose someone else's information.</p>
     </div>
-    <div class="execution-body reveal">
-      <p class="execution-quote">I taught myself to code to solve my own problems. The projects above exist because the process stays strict even when the team is one person: a spec I sign, a council of models that argues with it, a build loop that only closes when the acceptance script passes, and a human at every outbound trigger.</p>
-      <div class="execution-facts">
-        <div class="execution-fact"><strong>Spec first, then a council</strong>Every build starts with a written spec I sign, then a multi-model review before any code is written.</div>
-        <div class="execution-fact"><strong>Acceptance-verified loops</strong>The build loop only closes when a pinned acceptance script passes, so an agent cannot declare itself done.</div>
-        <div class="execution-fact"><strong>Agents draft, I send</strong>Nothing outbound leaves without me. Bartok, JARVIS, and every client tool follow the same rule.</div>
-        <div class="execution-fact"><strong>Skills, not prompts</strong>The Claude Code skills that run all of this are public on GitHub.</div>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="Songsheet screenshots. Use the arrow keys to move between slides.">
+            <figure class="car-slide">
+              <img src="assets/img/songsheet/whats-going-on.jpg" alt="Songsheet workspace showing a generated bass arrangement of What's Going On as tablature with chord names and a playback bar." loading="lazy" decoding="async">
+              <figcaption>What's Going On, bass. A generated arrangement where every note cites the source it came from.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/songsheet/playback-controls.jpg" alt="Songsheet playback controls and practice panels: source, arrangement, and compare modes, with per-measure source facts beside generated decisions." loading="lazy" decoding="async">
+              <figcaption>Practice panels. Every generated departure from the record sits next to the fact it departed from.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/songsheet/savoy-guitar.jpg" alt="Guitar chord-melody arrangement in drop-2 voicings rendered as tab, bars 17 through 32." loading="lazy" decoding="async">
+              <figcaption>Guitar chord-melody in drop-2 voicings. The bridge, bars 17 through 32.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/songsheet/peg-bass.jpg" alt="Peg, bass arrangement with intro and verse sections, loop controls, and a stems mixer for backing, bass, drums, guitar, horns, and keys." loading="lazy" decoding="async">
+              <figcaption>Peg, bass. Loop a section, mute a stem, play along.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/songsheet/guitar-draft.jpg" alt="Guitar chord-melody draft with four difficulty tiers and a verdict button on every bar." loading="lazy" decoding="async">
+              <figcaption>Four difficulty tiers of one melody. Each bar takes a verdict that recalibrates the hand model.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
       </div>
+      <div class="proj-body rv">
+        <h3>Songsheet</h3>
+        <p>Song plus target instrument in, playable sheet music and tab out. It finds existing transcriptions, verifies the melody against the actual recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. A three-engine ensemble arbitrates pitch, octave, and rhythm so a bass part is never octave-folded.</p>
+        <div class="stack"><span>Music AI</span><span>Audio analysis</span><span>LilyPond</span></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="JARVIS screenshots. Use the arrow keys to move between slides.">
+            <figure class="car-slide">
+              <img src="assets/img/jarvis/orb.jpg" alt="JARVIS interface: a white particle orb on black with a message input bar at the bottom." loading="lazy" decoding="async">
+              <figcaption>The audio-reactive orb, built in Three.js. It breathes when JARVIS talks.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <div class="vis vis-call" role="img" aria-label="A call card for JARVIS showing its avatar, a photoreal clone of Jake's face, with the readout connected, 16 cents per minute, zero dollars idle.">
+                <img src="assets/img/agents/avatar-jarvis.jpg" alt="" loading="lazy" decoding="async">
+                <div><b>JARVIS</b><span>butler wit &middot; wears your face</span><span class="mono"><i class="dot"></i>connected &middot; $0.16/min &middot; $0 idle</span></div>
+              </div>
+              <figcaption>On a video call, JARVIS wears a photoreal clone of my face and bills only for the minutes we talk.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>JARVIS</h3>
+        <p>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a memory with full-text search, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js audio-reactive orb. Everything runs on my own machine.</p>
+        <div class="stack"><span>Voice AI</span><span>FastAPI</span><span>Three.js</span><span>WebSockets</span></div>
+        <a class="proj-link" href="https://github.com/jakehorvitz/jarvis-pipeline">View on GitHub</a>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame">
+          <div class="vis vis-rail" role="img" aria-label="The ten pipeline stages drawn as a rail. Owner gates at kill-or-commit, spec sign-off, promote, and operate; a machine-verified gate at the build loop; agent gates elsewhere. A signal travels through the gates in order.">
+            <ol class="rail">
+              <li data-gate="agent"><b>01</b><span>Interrogate prompt</span><i>agent</i></li>
+              <li data-gate="owner"><b>02</b><span>Kill or commit</span><i>owner</i></li>
+              <li data-gate="owner"><b>03</b><span>Spec sign-off</span><i>owner</i></li>
+              <li data-gate="agent"><b>04</b><span>Council critique</span><i>agent</i></li>
+              <li data-gate="auto"><b>05</b><span>Build loop</span><i>auto</i></li>
+              <li data-gate="agent"><b>06</b><span>Adversarial review</span><i>agent</i></li>
+              <li data-gate="agent"><b>07</b><span>Staging validation</span><i>agent</i></li>
+              <li data-gate="owner"><b>08</b><span>Promote</span><i>Touch ID</i></li>
+              <li data-gate="step"><b>09</b><span>Present</span><i>step</i></li>
+              <li data-gate="owner"><b>10</b><span>Operate + learn</span><i>owner</i></li>
+            </ol>
+          </div>
+          <p class="frame-cap">Amber gates need my verbatim words or a Touch ID token. The green gate trusts only the acceptance script's real exit code.</p>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Horvitz Pipeline</h3>
+        <p>Open-source ship pipeline that mechanically enforces every gate instead of trusting an agent to follow prose. Ten stages: kill-or-commit, a signed spec, a multi-model council review, an acceptance-verified build loop, adversarial review, staging with seeded data, a promote step that requires Touch ID on my Mac, and an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
+        <div class="stack"><span>Open source</span><span>Bash</span><span>Claude Code</span></div>
+        <a class="proj-link" href="https://github.com/jakehorvitz/horvitzpipeline">View on GitHub</a>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="Pi-kadelic Brain screenshots. Use the arrow keys to move between slides.">
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/stage-floorplan.jpg" alt="Pi-kadelic's 3D stage builder in perspective view: a wireframe model of the house lot with a stage, a truss carrying lights, a DJ booth, a dance floor, and a Design AI chat panel offering example instructions." loading="lazy" decoding="async">
+              <figcaption>The 3D stage builder with the house plan loaded: stage, truss, PAR cans, DJ booth, dance floor. Design AI rearranges it from plain English.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/stage-top.jpg" alt="Top-down plan view of the same 3D build on a grid, with the object palette on the left." loading="lazy" decoding="async">
+              <figcaption>Top view of the same build, the way the setup crew reads it on party day.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/stage-labels.jpg" alt="Perspective view of the 3D build with labels switched on so every object is named." loading="lazy" decoding="async">
+              <figcaption>Labels on: every object is named so the crew knows what goes where. Undo, redo, reset, and delete sit above the scene.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/tasks.jpg" alt="The schedule and build board for a fixture party: party info, push, send, templates, budget, crew, auto-assign, and groups controls, a task list under Build and setup, and a Claude planning panel." loading="lazy" decoding="async">
+              <figcaption>The schedule and build board: crew, auto-assign, templates, and a Claude panel that plans the day. Fixture data.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/brain.jpg" alt="Jarvis Brain view: an overall risk meter reading moderate, 44 of 100, with schedule, budget, crew effort, inventory, and weather tiles and a list of next critical actions." loading="lazy" decoding="async">
+              <figcaption>Jarvis Brain: one risk score from schedule, budget, inventory, and crew effort, then the next critical actions.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/inventory.jpg" alt="Materials inventory table listing paints, primers, brushes, lumber, and stage backdrops with quantities, units, and notes." loading="lazy" decoding="async">
+              <figcaption>Materials inventory with quantities and notes. Low-stock items feed straight into the Brain's restock list.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/planner.jpg" alt="The AI planner tab with prompt chips: what could go wrong, two-hour pre-party checklist, rate my setup plan, decor priorities." loading="lazy" decoding="async">
+              <figcaption>The AI planner: what could go wrong, the two-hour pre-party checklist, and a rating of the setup plan.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/pikadelic/critique.jpg" alt="The critique notes drawer open on the right side of the schedule, ready for a note tagged General." loading="lazy" decoding="async">
+              <figcaption>Critique notes: the crew drops what went wrong so the next party fixes it.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Pi-kadelic Brain</h3>
+        <p>Event-operations platform for a 200-person fraternity. A 3D stage builder places the stage, truss, lighting, DJ booth, and dance floor on a model of the house, and a Design AI rearranges it from plain English. Live multi-user sync keeps the crew on one schedule; budget, headcount, and inventory tracking sit next to an AI planner that writes the day and the materials list. Used to plan events of up to 350 people.</p>
+        <div class="stack"><span>3D stage builder</span><span>Three.js</span><span>Real-time sync</span><span>LLM planner</span></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="Shavit Rootman website screenshots. Use the arrow keys to move between slides.">
+            <figure class="car-slide">
+              <img src="assets/img/shavit/hero.jpg" alt="shavitrootman.com home page: a white farmhouse under a large tree with the headline Live with us. Learn about us. and a See available units button." loading="lazy" decoding="async">
+              <figcaption>Home. One promise up top, then the inventory across Michigan, Ohio, and Indiana in two buckets: available now and coming soon.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/shavit/case-studies.jpg" alt="Deal case studies section with three cards: Mead Street in Michigan, Clarendon Road in Ohio, Kendall Street in Indiana, each with purchase and appraisal figures." loading="lazy" decoding="async">
+              <figcaption>Deal case studies: three rebuilds documented from purchase price to appraisal.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/shavit/work-with-us.jpg" alt="One stop shop section with three panels: rent with us for tenants, invest with us for investors, sell us your home for home sellers." loading="lazy" decoding="async">
+              <figcaption>One page for tenants, investors, and home sellers, each with a single next step.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/shavit/meet.jpg" alt="Meet our founder section with a circular portrait of Shavit Rootman and LinkedIn and Instagram buttons." loading="lazy" decoding="async">
+              <figcaption>Meet the founder. The whole site speaks in his words; my job was the structure and the ship.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/shavit/phone.jpg" alt="The shavitrootman.com home page on a phone." loading="lazy" decoding="async">
+              <figcaption>Most visitors arrive from a text or Instagram, so the phone view is the one that matters.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Shavit Rootman</h3>
+        <p>The marketing site for a Midwest rental-housing operator I run marketing for. Two inventory buckets across Michigan, Ohio, and Indiana, deal case studies documented from purchase to appraisal, an investor page, and a text message as the only conversion path. Statically generated React on Netlify, with a shell acceptance gate that has to pass before any deploy goes out.</p>
+        <div class="stack"><span>Vite</span><span>React SSG</span><span>Netlify</span><span>Real estate</span></div>
+        <a class="proj-link" href="https://shavitrootman.com/">shavitrootman.com</a>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="Michael's Jarvis screenshots. Use the arrow keys to move between slides.">
+            <figure class="car-slide">
+              <img src="assets/img/michaels/dashboard.jpg" alt="Dashboard render reading Good morning, Michael, with drafts ready, contacts qualified, meetings this week, and tiles for Agent Chat, LinkedIn Engine, Recap to Tracker, Calendar Advisor, and Contact Extractor." loading="lazy" decoding="async">
+              <figcaption>The morning view: drafts ready, contacts qualified, and the five tools. Design render with sample data.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/michaels/setup.jpg" alt="Welcome to Jarvis setup screen with connections for an AI key and Google Calendar, plus three numbered setup steps." loading="lazy" decoding="async">
+              <figcaption>First run: bring your own key, connect a calendar, done.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/michaels/contacts.jpg" alt="Contact extractor render: pull, enrich, qualify against the ideal customer profile, with a table of sample contacts, fit scores, and verdicts." loading="lazy" decoding="async">
+              <figcaption>Contact extractor: pull, enrich, qualify against his ideal customer profile. Design render with sample names.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <img src="assets/img/michaels/login.jpg" alt="Login render over a mountain photograph with a single Unlock command center button." loading="lazy" decoding="async">
+              <figcaption>One login. His key, his data.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Michael's Jarvis</h3>
+        <p>A hosted AI chief-of-staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recap to tracker, and persistent memory, all behind one login. He brings his own API key, so the tool costs me nothing to run.</p>
+        <div class="stack"><span>Client AI product</span><span>Live on Fly.io</span></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame">
+          <div class="vis vis-lock" role="img" aria-label="Five encrypted document rows shown as moving ciphertext. Only the row whose key matches turns readable.">
+            <div class="lk"><span class="lk-id">row 01</span><span class="lk-doc"></span><span class="lk-key">&times;</span></div>
+            <div class="lk"><span class="lk-id">row 02</span><span class="lk-doc"></span><span class="lk-key">&times;</span></div>
+            <div class="lk open"><span class="lk-id">row 03</span><span class="lk-doc"></span><span class="lk-key">&#10003;</span></div>
+            <div class="lk"><span class="lk-id">row 04</span><span class="lk-doc"></span><span class="lk-key">&times;</span></div>
+            <div class="lk"><span class="lk-id">row 05</span><span class="lk-doc"></span><span class="lk-key">&times;</span></div>
+          </div>
+          <p class="frame-cap">No screenshots by design. Every row is ciphertext to the server, and the key never leaves the client's push notification.</p>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Zero-Knowledge Client Intake</h3>
+        <p>A fully encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload sensitive financial documents that stay unreadable without a password delivered by secure push notification, paired with an AI guide for managing finances after a death. No plaintext credentials anywhere in the system.</p>
+        <div class="stack"><span>Privacy by design</span><span>Encryption</span><span>AI guide</span></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-media rv">
+        <div class="frame car" data-car>
+          <div class="car-track" tabindex="0" aria-label="Campaign photos and analytics. Use the arrow keys to move between slides.">
+            <figure class="car-slide photo">
+              <img src="assets/img/campaign/bass.jpg" alt="Jake Horvitz playing a red bass guitar on stage under magenta and amber lights, a drum kit behind him." loading="lazy" decoding="async">
+              <figcaption>The music communities were a canvassing target, and also where I was already playing.</figcaption>
+            </figure>
+            <figure class="car-slide">
+              <div class="vis vis-chart" role="img" aria-label="Bar chart of website visits by day over two weeks, with the three highest days highlighted.">
+                <div class="bars">
+                  <span style="--i:0;height:30%"></span><span style="--i:1;height:42%"></span><span style="--i:2;height:38%"></span><span style="--i:3;height:66%"></span><span style="--i:4;height:50%"></span><span class="hot" style="--i:5;height:84%"></span><span style="--i:6;height:58%"></span>
+                  <span class="hot" style="--i:7;height:100%"></span><span style="--i:8;height:62%"></span><span style="--i:9;height:48%"></span><span style="--i:10;height:72%"></span><span style="--i:11;height:40%"></span><span class="hot" style="--i:12;height:90%"></span><span style="--i:13;height:55%"></span>
+                </div>
+                <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              </div>
+              <figcaption>Visits by day. The peaks told me which appearances worked and where to show up next.</figcaption>
+            </figure>
+            <figure class="car-slide photo">
+              <img src="assets/img/campaign/headshot.jpg" alt="Campaign headshot of Jake Horvitz in a light blue shirt against a grey backdrop." loading="lazy" decoding="async">
+              <figcaption>The campaign headshot, spring 2026. One of twelve seats from a field of fifty.</figcaption>
+            </figure>
+          </div>
+          <div class="car-ui">
+            <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
+            <div class="car-dots" aria-hidden="true"></div>
+            <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
+            <span class="car-count" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-body rv">
+        <h3>Campaign Analytics</h3>
+        <p>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website-visitor data to decide where to canvass and when to appear at clubs, sororities, and faith and music communities. I won 1 of 12 seats from a field of 50 candidates.</p>
+        <div class="stack"><span>Analytics</span><span>Campaign operations</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="break" aria-label="A note on how this got built">
+  <img src="assets/img/campaign/bass.jpg" alt="" loading="lazy" decoding="async">
+  <div class="wrap">
+    <blockquote class="rv">I taught myself to code to solve my own problems. The projects above exist because the process stays strict even when the team is one person.<cite>Jake Horvitz. Also on bass.</cite></blockquote>
+  </div>
+</section>
+
+<section id="how" class="sec how">
+  <div class="wrap">
+    <div class="sec-head rv" style="margin-bottom:0">
+      <h2>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
+      <p>A spec I sign, a council of models that argues with it, a build loop that only closes when the acceptance script passes, and a human at every outbound trigger.</p>
     </div>
-    <div class="how-links reveal">
-      <a class="btn btn-secondary" href="https://github.com/jakehorvitz/horvitzpipeline">Horvitz Pipeline on GitHub</a>
-      <a class="btn btn-secondary" href="https://github.com/jakehorvitz/jake-claude-skills">Claude Code skills pack</a>
+    <ol class="steps rv">
+      <li class="step"><b>01</b><h3>Spec first, then a council</h3><p>Every build starts with a written spec I sign, then a multi-model review before any code is written.</p></li>
+      <li class="step"><b>02</b><h3>Acceptance-verified loops</h3><p>The build loop only closes when a pinned acceptance script passes, so an agent cannot declare itself done.</p></li>
+      <li class="step"><b>03</b><h3>Agents draft, I send</h3><p>Nothing outbound leaves without me. Bartok, JARVIS, and every client tool follow the same rule.</p></li>
+      <li class="step"><b>04</b><h3>Skills, not prompts</h3><p>The Claude Code skills that run all of this are public on GitHub.</p></li>
+    </ol>
+    <div class="how-links rv">
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/horvitzpipeline">Horvitz Pipeline on GitHub <span class="arrow">&nearr;</span></a>
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/jake-claude-skills">Claude Code skills pack <span class="arrow">&nearr;</span></a>
     </div>
   </div>
 </section>
 
 <section id="contact" class="contact">
-  <div class="wrap reveal">
+  <div class="wrap rv">
     <h2>Building something in music, entertainment, or AI? Let us talk.</h2>
     <p>I am at UC Santa Barbara through 2029 and take on AI and operations work alongside school. Email is fastest.</p>
     <div class="contact-links">
-      <a class="btn btn-primary" href="mailto:jakeharrisonhorvitz@gmail.com">jakeharrisonhorvitz@gmail.com</a>
-      <a class="btn btn-secondary" href="https://www.linkedin.com/in/jakehorvitz/">LinkedIn</a>
-      <a class="btn btn-secondary" href="https://github.com/jakehorvitz">GitHub</a>
+      <a class="btn btn-ink" href="mailto:jakeharrisonhorvitz@gmail.com">jakeharrisonhorvitz@gmail.com</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/jakehorvitz/">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub</a>
     </div>
   </div>
 </section>
@@ -222,6 +476,6 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 </body>
 </html>
