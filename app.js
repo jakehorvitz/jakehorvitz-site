@@ -113,12 +113,11 @@
     var img = screen && screen.querySelector('img');
     var phone = root.querySelector('.phone');
     if (!img) return;
-    var CROP = 420 / 2867; // the queue column starts below the stat tiles
     function place(prog) {
       var h = img.offsetHeight;
       if (!h) return;
-      var start = h * CROP, max = h - start - screen.clientHeight;
-      img.style.setProperty('--sy', (-(start + easeInOut(prog) * Math.max(0, max))).toFixed(1) + 'px');
+      var max = h - screen.clientHeight;
+      img.style.setProperty('--sy', (-(easeInOut(prog) * Math.max(0, max))).toFixed(1) + 'px');
     }
     if (rm) {
       img.addEventListener('load', function () { place(0); });

@@ -287,10 +287,10 @@ p { text-wrap: pretty; }
   box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.1);
 }
 .laptop-screen { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 5px; background: #0d1117; position: relative; }
-/* Cropped to the approval queue column: the stat tiles and ledger never enter the frame. */
+/* The image file holds only Bartok's approval queue column. */
 .laptop-screen img {
-  position: absolute; top: 0; left: -136.57%; width: 238.81%; max-width: none; height: auto;
-  transform: translate3d(0, var(--sy, -14.65%), 0); will-change: transform;
+  position: absolute; top: 0; left: 0; width: 100%; max-width: none; height: auto;
+  transform: translate3d(0, var(--sy, 0px), 0); will-change: transform;
 }
 .screen-sheen {
   position: absolute; inset: 0; pointer-events: none;
