@@ -22,7 +22,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wght@300..600&display=swap">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <script>
 /* Opening sequence: once per session, never under reduced motion. A timer clears it even if later scripts fail. */
@@ -37,8 +36,9 @@
   } catch (e) { c.classList.remove('intro-on', 'intro-hold'); }
 })(document.documentElement);
 </script>
+<!-- three.js r169 vendored from npm three@0.169.0 build/three.module.min.js, sha256 f7cee3c7533449a1505cc12cb5128b89e3d4fd3d7ea62b05f9f5464a217472ee (matches the npm tarball and jsDelivr metadata). -->
 <script type="importmap">
-{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js"}}
+{"imports": {"three": "./assets/vendor/three.module.min.js"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Jake Horvitz","url":"https://jakehorvitz.com/","affiliation":{"@type":"CollegeOrUniversity","name":"UC Santa Barbara"},"sameAs":["https://github.com/jakehorvitz","https://www.linkedin.com/in/jakehorvitz/"]}
