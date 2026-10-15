@@ -22,17 +22,140 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wght@300..600&display=swap">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>
+/* Opening sequence: once per session, never under reduced motion. A timer clears it even if later scripts fail. */
+(function (c) {
+  c.classList.add('js');
+  try {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.sessionStorage.getItem('jh-intro')) {
+      window.sessionStorage.setItem('jh-intro', '1');
+      c.classList.add('intro-on', 'intro-hold');
+      window.setTimeout(function () { c.classList.remove('intro-on', 'intro-hold'); }, 5200);
+    }
+  } catch (e) { c.classList.remove('intro-on', 'intro-hold'); }
+})(document.documentElement);
+</script>
+<script type="importmap">
+{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js"}}
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Jake Horvitz","url":"https://jakehorvitz.com/","affiliation":{"@type":"CollegeOrUniversity","name":"UC Santa Barbara"},"sameAs":["https://github.com/jakehorvitz","https://www.linkedin.com/in/jakehorvitz/"]}
 </script>
 </head>
 <body>
 
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-half intro-top"></div>
+  <div class="intro-half intro-bot"></div>
+  <canvas class="intro-strings" id="introStrings"></canvas>
+  <p class="intro-name">Jake Horvitz</p>
+  <p class="intro-skip mono">Click or press any key to skip</p>
+</div>
+<script>
+/* Soundcheck: four strings draw in, ring out G D A E, strum, and the stage splits open along them. */
+(function () {
+  var c = document.documentElement, el = document.getElementById('intro');
+  if (!el || !c.classList.contains('intro-on')) return;
+  var cv = document.getElementById('introStrings'), ctx = cv.getContext && cv.getContext('2d');
+  var w = 0, h = 0, dpr = 1, y0 = 0, t0 = performance.now(), opened = false, done = false, raf = 0;
+  var NAMES = ['G', 'D', 'A', 'E'], GAUGE = [1.3, 1.8, 2.4, 3.1];
+  var PLUCK = [1240, 1060, 880, 700], STRUM = 1480, OPEN = 1640, END = 2500;
+  var amp = [0, 0, 0, 0], hit = [-1, -1, -1, -1];
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    ctx && ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    y0 = h * 0.58;
+    el.style.setProperty('--split', y0 + 'px');
+  }
+  function ease(t) { return 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 4); }
+  function draw(t) {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, w, h);
+    var gut = Math.max(16, Math.min(48, w * 0.04)), sL = w < 700 ? 30 : 46, sR = w < 700 ? 18 : 26;
+    var xa = gut + (w < 700 ? 22 : 30), xb = w;
+    for (var i = 0; i < 4; i++) {
+      var k = i - 1.5, ya = y0 + k * sL, yb = y0 + k * sR;
+      var grow = ease((t - 60 * i) / 560), xe = xa + (xb - xa) * grow;
+      if (grow <= 0) continue;
+      var pt = PLUCK[i];
+      if (t >= pt && hit[i] < 0) { hit[i] = t; amp[i] = w < 700 ? 12 : 20; }
+      if (t >= STRUM && hit[i] < STRUM) { hit[i] = t; amp[i] = w < 700 ? 16 : 26; }
+      var age = hit[i] < 0 ? 0 : (t - hit[i]) / 1000, a = amp[i] * Math.exp(-age * 3.2);
+      var om = 34 + i * 7, glow = Math.min(1, a / 10);
+      if (a > 1.5) {
+        // the blur a ringing string leaves: its full swing, faintly
+        ctx.beginPath();
+        for (var e = 0; e <= 48; e++) { var ue = e / 48, xq = xa + (xe - xa) * ue; ctx.lineTo(xq, ya + (yb - ya) * ((xq - xa) / (xb - xa)) - a * Math.sin(Math.PI * ue)); }
+        for (var e2 = 48; e2 >= 0; e2--) { var ue2 = e2 / 48, xr = xa + (xe - xa) * ue2; ctx.lineTo(xr, ya + (yb - ya) * ((xr - xa) / (xb - xa)) + a * Math.sin(Math.PI * ue2)); }
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(242,169,59,' + (0.07 * glow).toFixed(3) + ')';
+        ctx.fill();
+      }
+      ctx.beginPath();
+      for (var s = 0; s <= 72; s++) {
+        var u = s / 72, x = xa + (xe - xa) * u, yl = ya + (yb - ya) * ((x - xa) / (xb - xa));
+        var d = a * Math.sin(Math.PI * u) * Math.sin(age * om) + a * 0.3 * Math.sin(2 * Math.PI * u) * Math.sin(age * om * 2 + 1.3);
+        if (s === 0) ctx.moveTo(x, yl + d); else ctx.lineTo(x, yl + d);
+      }
+      if (glow > 0.02) {
+        ctx.strokeStyle = 'rgba(242,169,59,' + (0.28 * glow).toFixed(3) + ')';
+        ctx.lineWidth = GAUGE[i] + 8; ctx.stroke();
+      }
+      ctx.strokeStyle = 'rgba(' + Math.round(236 + 6 * glow) + ',' + Math.round(222 - 50 * glow) + ',' + Math.round(196 - 130 * glow) + ',' + (0.55 + 0.45 * glow).toFixed(3) + ')';
+      ctx.lineWidth = GAUGE[i]; ctx.stroke();
+      ctx.fillStyle = hit[i] >= 0 && age < 0.6 ? '#F2A93B' : 'rgba(236,222,196,0.45)';
+      ctx.font = '500 11px "Martian Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'middle';
+      ctx.globalAlpha = ease((t - 60 * i) / 300);
+      ctx.fillText(NAMES[i], gut, ya);
+      ctx.globalAlpha = 1;
+    }
+  }
+  function open() {
+    if (opened) return;
+    opened = true;
+    el.classList.add('is-open');
+    c.classList.remove('intro-hold');
+    document.dispatchEvent(new CustomEvent('intro:open'));
+  }
+  function finish() {
+    if (done) return;
+    done = true;
+    cancelAnimationFrame(raf);
+    c.classList.remove('intro-on', 'intro-hold');
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.removeEventListener(ev, skip, true); });
+  }
+  function skip() {
+    if (done) return;
+    el.classList.add('is-fast');
+    open();
+    setTimeout(finish, 420);
+  }
+  function tick(now) {
+    var t = now - t0;
+    draw(t);
+    if (t >= OPEN) open();
+    if (t >= END) { finish(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  try {
+    if (window.matchMedia('(pointer: coarse)').matches) { var sk = el.querySelector('.intro-skip'); if (sk) sk.textContent = 'Tap to skip'; }
+    size();
+    window.addEventListener('resize', size);
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, skip, { capture: true, passive: true }); });
+    raf = requestAnimationFrame(tick);
+  } catch (e) { finish(); }
+})();
+</script>
+
 <a class="skip" href="#agents">Skip to content</a>
 
 <nav class="nav" id="nav" aria-label="Primary">
+  <span class="nav-progress" aria-hidden="true"></span>
   <div class="wrap">
     <a href="#top" class="mark">Jake Horvitz <i>SB / LA</i></a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
@@ -50,18 +173,21 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <canvas class="hero-canvas" id="heroBass" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <p class="hero-readout mono rise"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
-    <h1 class="rise">I build the tools you need and run the operations behind them.</h1>
-    <p class="hero-tagline rise">Ten projects, all built solo. Three agents I video-call and hand tasks mid-call, a build pipeline that will not let me skip a step, a voice assistant that spawns its own coding agents, and the operations software behind live music, real estate, and campus politics.</p>
-    <div class="hero-cta rise">
+  <div class="hero-stage" aria-hidden="true">
+    <div class="hero-glow"></div>
+    <canvas class="hero-canvas" id="heroBass"></canvas>
+  </div>
+  <div class="wrap hero-copy">
+    <p class="hero-readout mono rise" style="--i:0"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
+    <h1 class="rise" style="--i:1">I build the tools you need and run the operations behind them.</h1>
+    <p class="hero-tagline rise" style="--i:2">Ten projects, all built solo. Three agents I video-call and hand tasks mid-call, a build pipeline that will not let me skip a step, a voice assistant that spawns its own coding agents, and the operations software behind live music, real estate, and campus politics.</p>
+    <div class="hero-cta rise" style="--i:3">
       <a class="btn btn-amber" href="#agents">Meet the agents <span class="arrow">&darr;</span></a>
       <a class="btn btn-ghost" href="#projects">See the projects</a>
       <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub <span class="arrow">&nearr;</span></a>
     </div>
   </div>
+  <p class="hero-hint mono" id="heroHint" aria-hidden="true"><i></i><span>Run the cursor across the strings</span></p>
 </header>
 
 <section id="agents" class="sec agents">
@@ -72,12 +198,16 @@
     </div>
 
     <div class="agents-top">
-      <div class="devices rv" data-devices>
+      <div class="devices" data-devices>
         <div class="laptop">
           <div class="laptop-lid">
-            <div class="laptop-screen">
-              <img class="screen-scroll" src="assets/img/agents/bartok-tall.jpg" alt="Bartok's operator dashboard on staging, a long page: net and earned this month, lanes, ledger, queue metrics, and the approval queue labeled Jake decides with a column of drafted pitches waiting for a decision." loading="lazy" decoding="async" width="1600" height="2867">
+            <div class="lid-front">
+              <div class="laptop-screen">
+                <img class="screen-scroll" src="assets/img/agents/bartok-tall.jpg" alt="Bartok's operator dashboard on staging, a long page: net and earned this month, lanes, ledger, queue metrics, and the approval queue labeled Jake decides with a column of drafted pitches waiting for a decision." loading="lazy" decoding="async" width="1600" height="2867">
+                <span class="screen-sheen" aria-hidden="true"></span>
+              </div>
             </div>
+            <div class="lid-back" aria-hidden="true"></div>
           </div>
           <div class="laptop-base"><span></span></div>
         </div>
@@ -107,7 +237,7 @@
 
     <div class="roster">
       <article class="agent rv">
-        <div class="agent-face"><img src="assets/img/agents/avatar-bartok.jpg" alt="Bartok's avatar: a woman with long blonde hair and round glasses in a sage sweater, lit by window light." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-bartok.jpg" alt="Bartok's avatar: a woman with long blonde hair and round glasses in a sage sweater, lit by window light." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
           <div class="agent-head"><h3>Bartok</h3><span class="agent-tag mono">revenue agent &middot; all business</span></div>
           <p>Bartok runs on a DigitalOcean droplet and looks for work around the clock: website mockups for local businesses, gigs, inbound leads. It is direct and thinks in unit economics. It says "that is queued for your approval" instead of pretending something already went out, and it does not inflate numbers. When I say "commit" on a call, that is a logged decision.</p>
@@ -115,7 +245,7 @@
         </div>
       </article>
       <article class="agent rv">
-        <div class="agent-face"><img src="assets/img/agents/avatar-jarvis.jpg" alt="JARVIS's avatar: a photoreal clone of Jake's own face, smiling, in a light blue polo." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-jarvis.jpg" alt="JARVIS's avatar: a photoreal clone of Jake's own face, smiling, in a light blue polo." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
           <div class="agent-head"><h3>JARVIS</h3><span class="agent-tag mono">butler wit &middot; wears my face</span></div>
           <p>The generalist. During our FaceTime sessions, JARVIS wears a photoreal clone of my face. Dry, one or two sentences at a time. I hand it an errand, it responds "Task accepted," and a runner on my Mac picks it up. When I ask for something bigger, JARVIS responds "Build accepted," and a Claude Code session starts on my machine while we keep talking. If JARVIS is unsure about any task, it follows up by asking me questions, all while logging the change in my Claude Code memory.</p>
@@ -123,7 +253,7 @@
         </div>
       </article>
       <article class="agent rv">
-        <div class="agent-face"><img src="assets/img/agents/avatar-philosopher.jpg" alt="The Philosopher's avatar: a man with silver hair and a beard in a grey jacket, seated in a bright loft." loading="lazy" decoding="async" width="800" height="800"></div>
+        <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-philosopher.jpg" alt="The Philosopher's avatar: a man with silver hair and a beard in a grey jacket, seated in a bright loft." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
           <div class="agent-head"><h3>The Philosopher</h3><span class="agent-tag mono">counsel &middot; one-year horizon</span></div>
           <p>Counsel only. It has no task runner and no build lane, so it cannot send, spend, or ship anything. The Philosopher thinks with me on a one-year horizon: what to sunset, what I am avoiding, what a new idea would replace. It takes a position, defends it, and changes its mind out loud if I argue it out of one. When something needs to become real work, it says "that is a handoff" and describes the brief.</p>
@@ -140,9 +270,19 @@
       <h2>Every one of these runs in production for a real user.</h2>
       <p>Screenshots are from staging with fixture data wherever a live view would show someone else's information.</p>
     </div>
+    <nav class="setlist" aria-label="Projects" data-setlist>
+      <a href="#p-songsheet">Songsheet</a>
+      <a href="#p-jarvis">JARVIS</a>
+      <a href="#p-horvitz-pipeline">Horvitz Pipeline</a>
+      <a href="#p-pikadelic">Pi-kadelic Brain</a>
+      <a href="#p-shavit">Shavit Rootman</a>
+      <a href="#p-michaels-jarvis">Michael's Jarvis</a>
+      <a href="#p-zero-knowledge">Zero-Knowledge Client Intake</a>
+      <a href="#p-campaign">Campaign Analytics</a>
+    </nav>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-songsheet" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Songsheet screenshots. Use the arrow keys to move between slides.">
             <figure class="car-slide">
@@ -181,8 +321,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-jarvis" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="JARVIS screenshots. Use the arrow keys to move between slides.">
             <figure class="car-slide">
@@ -213,8 +353,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-horvitz-pipeline" data-scene>
+      <div class="proj-media">
         <div class="frame">
           <div class="vis vis-rail" role="img" aria-label="The ten pipeline stages drawn as a rail. Owner gates at kill-or-commit, spec sign-off, promote, and operate. A machine-verified gate at the build loop. Agent gates elsewhere. A signal travels through the gates in order.">
             <ol class="rail">
@@ -241,8 +381,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-pikadelic" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Pi-kadelic Brain screenshots. Use the arrow keys to move between slides.">
             <figure class="car-slide">
@@ -293,8 +433,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-shavit" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Shavit Rootman website screenshots. Use the arrow keys to move between slides.">
             <figure class="car-slide">
@@ -334,8 +474,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-michaels-jarvis" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Michael's Jarvis screenshots. Use the arrow keys to move between slides.">
             <figure class="car-slide">
@@ -370,8 +510,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-zero-knowledge" data-scene>
+      <div class="proj-media">
         <div class="frame">
           <div class="vis vis-lock" role="img" aria-label="Five encrypted document rows shown as moving ciphertext. Only the row whose key matches turns readable.">
             <div class="lk"><span class="lk-id">row 01</span><span class="lk-doc"></span><span class="lk-key">&times;</span></div>
@@ -390,8 +530,8 @@
       </div>
     </article>
 
-    <article class="proj">
-      <div class="proj-media rv">
+    <article class="proj" id="p-campaign" data-scene>
+      <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Campaign photos and analytics. Use the arrow keys to move between slides.">
             <figure class="car-slide photo">
@@ -430,7 +570,7 @@
   </div>
 </section>
 
-<section class="break" aria-label="A note on how this got built">
+<section class="break" aria-label="A note on how this got built" data-scene="through">
   <img src="assets/img/campaign/bass.jpg" alt="" loading="lazy" decoding="async">
   <div class="wrap">
     <blockquote class="rv">I taught myself to code to solve my own problems. Everything above shipped because the process remains strict when the team is a single person.<cite>Jake Horvitz. Also on bass.</cite></blockquote>
@@ -443,7 +583,7 @@
       <h2>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
       <p>A spec I sign, a council of models that critiques it, a build loop that closes only when the acceptance script passes, and me at every outbound trigger.</p>
     </div>
-    <ol class="steps rv">
+    <ol class="steps rv" data-scene="fill">
       <li class="step"><b>01</b><h3>Spec first, then a council</h3><p>Every build starts with a written spec I sign, then a multi-model review before any code is written.</p></li>
       <li class="step"><b>02</b><h3>Acceptance-verified loops</h3><p>The build loop closes only when a pinned acceptance script passes, so an agent cannot declare itself done.</p></li>
       <li class="step"><b>03</b><h3>Agents draft, I send</h3><p>Nothing outbound leaves without me. Bartok, JARVIS, and every client tool follow the same rule.</p></li>
@@ -456,7 +596,22 @@
   </div>
 </section>
 
+<section id="now" class="sec now" aria-labelledby="now-title">
+  <div class="wrap">
+    <h2 id="now-title" class="rv">Now</h2>
+    <article class="role rv">
+      <p class="role-when mono">October 2026 to present</p>
+      <div class="role-head">
+        <h3>Campus Ambassador, UCSB</h3>
+        <p class="role-org">Tokin' Jew</p>
+      </div>
+      <p class="role-line">Bringing the Tokin' Jew College Tour to UCSB, working with AEPi and campus Jewish organizations on dates, funding and programming for a spring 2027 event.</p>
+    </article>
+  </div>
+</section>
+
 <section id="contact" class="contact">
+  <canvas class="contact-strings" id="contactStrings" aria-hidden="true"></canvas>
   <div class="wrap rv">
     <h2>Building something in music, entertainment, or AI? Email me.</h2>
     <p>I am at UC Santa Barbara through 2029 and take on AI and operations work alongside school.</p>
@@ -476,5 +631,6 @@
 </footer>
 
 <script src="app.js" defer></script>
+<script type="module" src="hero3d.js"></script>
 </body>
 </html>
