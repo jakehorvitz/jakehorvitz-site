@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jake Horvitz | AI Projects</title>
 <meta name="description" content="Ten projects engineered solo by Jake Horvitz using Claude Code: a gated deployment pipeline, three voice/video-interactive agents, a personal voice assistant, and custom operations platforms driving live music, real estate, and campus governance.">
-<meta name="theme-color" content="#141210">
+<meta name="theme-color" content="#F3EEE3">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jake Horvitz">
 <meta property="og:title" content="Jake Horvitz | AI Projects">
@@ -18,27 +18,24 @@
 <meta name="twitter:title" content="Jake Horvitz | AI Projects">
 <meta name="twitter:description" content="Ten projects engineered solo with Claude Code, where AI meets live music.">
 <meta name="twitter:image" content="https://jakehorvitz.com/assets/og.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141210'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23F2A93B'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3EEE3'/%3E%3Cpath d='M32 12 Q 38 32 32 52' fill='none' stroke='%23B85A37' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='12' r='4' fill='%23B85A37'/%3E%3Ccircle cx='32' cy='52' r='4' fill='%23B85A37'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wght@300..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wght@300..500&display=swap">
 <link rel="stylesheet" href="styles.css">
 <script>
-/* Opening sequence: once per session, never under reduced motion. A timer clears it even if later scripts fail. */
+/* Live session: plays once per browser session, never under reduced motion or a deep link.
+   app.js takes it over; if app.js never arrives, the safety timer shows the finished page. */
 (function (c) {
   c.classList.add('js');
   try {
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.sessionStorage.getItem('jh-intro')) {
-      window.sessionStorage.setItem('jh-intro', '1');
-      c.classList.add('intro-on', 'intro-hold');
-      window.setTimeout(function () { c.classList.remove('intro-on', 'intro-hold'); }, 5200);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.sessionStorage.getItem('jh-live') && !window.location.hash) {
+      window.sessionStorage.setItem('jh-live', '1');
+      c.classList.add('live');
+      window.__liveSafety = window.setTimeout(function () { c.classList.remove('live'); }, 2500);
     }
-  } catch (e) { c.classList.remove('intro-on', 'intro-hold'); }
+  } catch (e) { c.classList.remove('live'); }
 })(document.documentElement);
-</script>
-<!-- three.js r169 vendored from npm three@0.169.0 build/three.module.min.js, sha256 f7cee3c7533449a1505cc12cb5128b89e3d4fd3d7ea62b05f9f5464a217472ee (matches the npm tarball and jsDelivr metadata). -->
-<script type="importmap">
-{"imports": {"three": "./assets/vendor/three.module.min.js"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Jake Horvitz","url":"https://jakehorvitz.com/","affiliation":{"@type":"CollegeOrUniversity","name":"UC Santa Barbara"},"sameAs":["https://github.com/jakehorvitz","https://www.linkedin.com/in/jakehorvitz/"]}
@@ -46,118 +43,16 @@
 </head>
 <body>
 
-<div class="intro" id="intro" aria-hidden="true">
-  <div class="intro-half intro-top"></div>
-  <div class="intro-half intro-bot"></div>
-  <canvas class="intro-strings" id="introStrings"></canvas>
-  <p class="intro-name">Jake Horvitz</p>
-  <p class="intro-skip mono">Click or press any key to skip</p>
-</div>
-<script>
-/* Soundcheck: four strings draw in, ring out G D A E, strum, and the stage splits open along them. */
-(function () {
-  var c = document.documentElement, el = document.getElementById('intro');
-  if (!el || !c.classList.contains('intro-on')) return;
-  var cv = document.getElementById('introStrings'), ctx = cv.getContext && cv.getContext('2d');
-  var w = 0, h = 0, dpr = 1, y0 = 0, t0 = performance.now(), opened = false, done = false, raf = 0;
-  var NAMES = ['G', 'D', 'A', 'E'], GAUGE = [1.3, 1.8, 2.4, 3.1];
-  var PLUCK = [1240, 1060, 880, 700], STRUM = 1480, OPEN = 1640, END = 2500;
-  var amp = [0, 0, 0, 0], hit = [-1, -1, -1, -1];
-  function size() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = window.innerWidth; h = window.innerHeight;
-    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-    ctx && ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    y0 = h * 0.58;
-    el.style.setProperty('--split', y0 + 'px');
-  }
-  function ease(t) { return 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 4); }
-  function draw(t) {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, w, h);
-    var gut = Math.max(16, Math.min(48, w * 0.04)), sL = w < 700 ? 30 : 46, sR = w < 700 ? 18 : 26;
-    var xa = gut + (w < 700 ? 22 : 30), xb = w;
-    for (var i = 0; i < 4; i++) {
-      var k = i - 1.5, ya = y0 + k * sL, yb = y0 + k * sR;
-      var grow = ease((t - 60 * i) / 560), xe = xa + (xb - xa) * grow;
-      if (grow <= 0) continue;
-      var pt = PLUCK[i];
-      if (t >= pt && hit[i] < 0) { hit[i] = t; amp[i] = w < 700 ? 12 : 20; }
-      if (t >= STRUM && hit[i] < STRUM) { hit[i] = t; amp[i] = w < 700 ? 16 : 26; }
-      var age = hit[i] < 0 ? 0 : (t - hit[i]) / 1000, a = amp[i] * Math.exp(-age * 3.2);
-      var om = 34 + i * 7, glow = Math.min(1, a / 10);
-      if (a > 1.5) {
-        // the blur a ringing string leaves: its full swing, faintly
-        ctx.beginPath();
-        for (var e = 0; e <= 48; e++) { var ue = e / 48, xq = xa + (xe - xa) * ue; ctx.lineTo(xq, ya + (yb - ya) * ((xq - xa) / (xb - xa)) - a * Math.sin(Math.PI * ue)); }
-        for (var e2 = 48; e2 >= 0; e2--) { var ue2 = e2 / 48, xr = xa + (xe - xa) * ue2; ctx.lineTo(xr, ya + (yb - ya) * ((xr - xa) / (xb - xa)) + a * Math.sin(Math.PI * ue2)); }
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(242,169,59,' + (0.07 * glow).toFixed(3) + ')';
-        ctx.fill();
-      }
-      ctx.beginPath();
-      for (var s = 0; s <= 72; s++) {
-        var u = s / 72, x = xa + (xe - xa) * u, yl = ya + (yb - ya) * ((x - xa) / (xb - xa));
-        var d = a * Math.sin(Math.PI * u) * Math.sin(age * om) + a * 0.3 * Math.sin(2 * Math.PI * u) * Math.sin(age * om * 2 + 1.3);
-        if (s === 0) ctx.moveTo(x, yl + d); else ctx.lineTo(x, yl + d);
-      }
-      if (glow > 0.02) {
-        ctx.strokeStyle = 'rgba(242,169,59,' + (0.28 * glow).toFixed(3) + ')';
-        ctx.lineWidth = GAUGE[i] + 8; ctx.stroke();
-      }
-      ctx.strokeStyle = 'rgba(' + Math.round(236 + 6 * glow) + ',' + Math.round(222 - 50 * glow) + ',' + Math.round(196 - 130 * glow) + ',' + (0.55 + 0.45 * glow).toFixed(3) + ')';
-      ctx.lineWidth = GAUGE[i]; ctx.stroke();
-      ctx.fillStyle = hit[i] >= 0 && age < 0.6 ? '#F2A93B' : 'rgba(236,222,196,0.45)';
-      ctx.font = '500 11px "Martian Mono", ui-monospace, monospace';
-      ctx.textBaseline = 'middle';
-      ctx.globalAlpha = ease((t - 60 * i) / 300);
-      ctx.fillText(NAMES[i], gut, ya);
-      ctx.globalAlpha = 1;
-    }
-  }
-  function open() {
-    if (opened) return;
-    opened = true;
-    el.classList.add('is-open');
-    c.classList.remove('intro-hold');
-    document.dispatchEvent(new CustomEvent('intro:open'));
-  }
-  function finish() {
-    if (done) return;
-    done = true;
-    cancelAnimationFrame(raf);
-    c.classList.remove('intro-on', 'intro-hold');
-    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.removeEventListener(ev, skip, true); });
-  }
-  function skip() {
-    if (done) return;
-    el.classList.add('is-fast');
-    open();
-    setTimeout(finish, 420);
-  }
-  function tick(now) {
-    var t = now - t0;
-    draw(t);
-    if (t >= OPEN) open();
-    if (t >= END) { finish(); return; }
-    raf = requestAnimationFrame(tick);
-  }
-  try {
-    if (window.matchMedia('(pointer: coarse)').matches) { var sk = el.querySelector('.intro-skip'); if (sk) sk.textContent = 'Tap to skip'; }
-    size();
-    window.addEventListener('resize', size);
-    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, skip, { capture: true, passive: true }); });
-    raf = requestAnimationFrame(tick);
-  } catch (e) { finish(); }
-})();
-</script>
-
 <a class="skip" href="#agents">Skip to content</a>
 
 <nav class="nav" id="nav" aria-label="Primary">
   <span class="nav-progress" aria-hidden="true"></span>
   <div class="wrap">
-    <a href="#top" class="mark">Jake Horvitz <i>SB / LA</i></a>
+    <a href="#top" class="mark">Jake Horvitz</a>
+    <span class="nav-status" aria-hidden="true">
+      <svg class="pluck" viewBox="0 0 20 30"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg>
+      <span class="nav-verb">Drafting</span>
+    </span>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
       <span></span>
     </button>
@@ -173,27 +68,67 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-stage" aria-hidden="true">
-    <div class="hero-glow"></div>
-    <canvas class="hero-canvas" id="heroBass"></canvas>
-  </div>
-  <div class="wrap hero-copy">
-    <p class="hero-readout mono rise" style="--i:0"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
-    <h1 class="rise" style="--i:1">I build the tools you need and run the operations behind them.</h1>
-    <p class="hero-tagline rise" style="--i:2">Ten projects, all built solo. Three agents I video-call and hand tasks mid-call, a build pipeline that will not let me skip a step, a voice assistant that spawns its own coding agents, and the operations software behind live music, real estate, and campus politics.</p>
-    <div class="hero-cta rise" style="--i:3">
-      <a class="btn btn-amber" href="#agents">Meet the agents <span class="arrow">&darr;</span></a>
-      <a class="btn btn-ghost" href="#projects">See the projects</a>
-      <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub <span class="arrow">&nearr;</span></a>
+  <canvas class="hero-dots" id="heroDots" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <p class="hero-readout"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
+      <p class="status" id="heroStatus">
+        <svg class="pluck" id="heroPluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg>
+        <span class="status-text" id="statusText">Nothing outbound leaves without me.</span>
+        <span class="status-meta" id="statusMeta" aria-hidden="true"></span>
+      </p>
+      <h1 id="heroTitle">I build the tools you need and run the operations behind them.</h1>
+      <p class="hero-tagline" id="heroTagline">Ten projects, all built solo. Three agents I video-call and hand tasks mid-call, a build pipeline that will not let me skip a step, a voice assistant that spawns its own coding agents, and the operations software behind live music, real estate, and campus politics.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#agents">Meet the agents <span class="arrow" aria-hidden="true">&darr;</span></a>
+        <a class="btn btn-ghost" href="#projects">See the projects</a>
+        <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub <span class="arrow" aria-hidden="true">&nearr;</span></a>
+      </div>
     </div>
+
+    <aside class="session" aria-label="The three agents">
+      <p class="session-head"><span>Agent FaceTime</span><span class="session-clock" id="sessionClock" aria-hidden="true">00:00</span></p>
+      <ol class="session-log">
+        <li>
+          <a class="checkin" href="#agent-bartok">
+            <span class="checkin-face"><img src="assets/img/agents/avatar-bartok.jpg" alt="" width="800" height="800" decoding="async"></span>
+            <span class="checkin-body">
+              <span class="checkin-name">Bartok</span>
+              <span class="checkin-tag">revenue agent &middot; all business</span>
+              <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>that is queued for your approval</q></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="checkin" href="#agent-jarvis">
+            <span class="checkin-face"><img src="assets/img/agents/avatar-jarvis.jpg" alt="" width="800" height="800" decoding="async"></span>
+            <span class="checkin-body">
+              <span class="checkin-name">JARVIS</span>
+              <span class="checkin-tag">butler wit &middot; wears my face</span>
+              <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>Build accepted</q></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="checkin" href="#agent-philosopher">
+            <span class="checkin-face"><img src="assets/img/agents/avatar-philosopher.jpg" alt="" width="800" height="800" decoding="async"></span>
+            <span class="checkin-body">
+              <span class="checkin-name">The Philosopher</span>
+              <span class="checkin-tag">counsel &middot; one-year horizon</span>
+              <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>that is a handoff</q></span>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </aside>
   </div>
-  <p class="hero-hint mono" id="heroHint" aria-hidden="true"><i></i><span>Run the cursor across the strings</span></p>
+  <div class="ink ink--hero" data-ink aria-hidden="true"><canvas></canvas></div>
 </header>
 
 <section id="agents" class="sec agents">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2>Three agents. They draft, I send.</h2>
+      <h2 data-stream>Three agents. They draft, I send.</h2>
       <p>Bartok finds work, JARVIS runs errands, and the Philosopher asks questions. I video-call all three through Agent FaceTime, a mobile portal I built where each one shows up as a photoreal avatar. I say a trigger word mid-call, a runner on my Mac or a cloud droplet picks up the task, and the agent reads the result back on the call.</p>
     </div>
 
@@ -236,26 +171,26 @@
     </div>
 
     <div class="roster">
-      <article class="agent rv">
+      <article class="agent rv" id="agent-bartok">
         <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-bartok.jpg" alt="Bartok's avatar: a woman with long blonde hair and round glasses in a sage sweater, lit by window light." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
-          <div class="agent-head"><h3>Bartok</h3><span class="agent-tag mono">revenue agent &middot; all business</span></div>
+          <div class="agent-head"><h3>Bartok</h3><span class="agent-tag">revenue agent &middot; all business</span></div>
           <p>Bartok runs on a DigitalOcean droplet and looks for work around the clock: website mockups for local businesses, gigs, inbound leads. It is direct and thinks in unit economics. It says "that is queued for your approval" instead of pretending something already went out, and it does not inflate numbers. When I say "commit" on a call, that is a logged decision.</p>
           <div class="agent-rules"><span class="rule no">spends money</span><span class="rule no">sends without approval</span><span class="rule yes">drafts, pitches, deliverables</span><span class="rule yes">runs on the droplet</span></div>
         </div>
       </article>
-      <article class="agent rv">
+      <article class="agent rv" id="agent-jarvis">
         <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-jarvis.jpg" alt="JARVIS's avatar: a photoreal clone of Jake's own face, smiling, in a light blue polo." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
-          <div class="agent-head"><h3>JARVIS</h3><span class="agent-tag mono">butler wit &middot; wears my face</span></div>
+          <div class="agent-head"><h3>JARVIS</h3><span class="agent-tag">butler wit &middot; wears my face</span></div>
           <p>The generalist. During our FaceTime sessions, JARVIS wears a photoreal clone of my face. Dry, one or two sentences at a time. I hand it an errand, it responds "Task accepted," and a runner on my Mac picks it up. When I ask for something bigger, JARVIS responds "Build accepted," and a Claude Code session starts on my machine while we keep talking. If JARVIS is unsure about any task, it follows up by asking me questions, all while logging the change in my Claude Code memory.</p>
           <div class="agent-rules"><span class="rule yes">task accepted: Mac runner</span><span class="rule yes">build accepted: Claude Code</span><span class="rule no">invents facts</span></div>
         </div>
       </article>
-      <article class="agent rv">
+      <article class="agent rv" id="agent-philosopher">
         <div class="agent-call"><div class="agent-face"><img src="assets/img/agents/avatar-philosopher.jpg" alt="The Philosopher's avatar: a man with silver hair and a beard in a grey jacket, seated in a bright loft." loading="lazy" decoding="async" width="800" height="800"></div><span class="call-ring" aria-hidden="true"></span><span class="call-ring" aria-hidden="true"></span></div>
         <div>
-          <div class="agent-head"><h3>The Philosopher</h3><span class="agent-tag mono">counsel &middot; one-year horizon</span></div>
+          <div class="agent-head"><h3>The Philosopher</h3><span class="agent-tag">counsel &middot; one-year horizon</span></div>
           <p>Counsel only. It has no task runner and no build lane, so it cannot send, spend, or ship anything. The Philosopher thinks with me on a one-year horizon: what to sunset, what I am avoiding, what a new idea would replace. It takes a position, defends it, and changes its mind out loud if I argue it out of one. When something needs to become real work, it says "that is a handoff" and describes the brief.</p>
           <div class="agent-rules"><span class="rule no">executes anything</span><span class="rule no">hands me a menu of options</span><span class="rule yes">asks what it replaces</span></div>
         </div>
@@ -267,10 +202,12 @@
 <section id="projects" class="sec projects">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2>Every one of these runs in production for a real user.</h2>
+      <h2 data-stream>Every one of these runs in production for a real user.</h2>
       <p>Screenshots are from staging with fixture data wherever a live view would show someone else's information.</p>
     </div>
-    <nav class="setlist" aria-label="Projects" data-setlist>
+  </div>
+  <nav class="setlist" aria-label="Projects" data-setlist>
+    <div class="wrap setlist-track">
       <a href="#p-songsheet">Songsheet</a>
       <a href="#p-jarvis">JARVIS</a>
       <a href="#p-horvitz-pipeline">Horvitz Pipeline</a>
@@ -279,9 +216,11 @@
       <a href="#p-michaels-jarvis">Michael's Jarvis</a>
       <a href="#p-zero-knowledge">Zero-Knowledge Client Intake</a>
       <a href="#p-campaign">Campaign Analytics</a>
-    </nav>
+    </div>
+  </nav>
+  <div class="wrap">
 
-    <article class="proj" id="p-songsheet" data-scene>
+    <article class="proj" id="p-songsheet">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Songsheet screenshots. Use the arrow keys to move between slides.">
@@ -316,12 +255,12 @@
       </div>
       <div class="proj-body rv">
         <h3>Songsheet</h3>
-        <p>Give it a song and an instrument, get playable sheet music and tab. It finds existing transcriptions, checks the melody against the recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. Three engines vote on pitch, octave, and rhythm so a bass part never lands in the wrong octave.</p>
+        <p data-stream>Give it a song and an instrument, get playable sheet music and tab. It finds existing transcriptions, checks the melody against the recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. Three engines vote on pitch, octave, and rhythm so a bass part never lands in the wrong octave.</p>
         <div class="stack"><span>Music AI</span><span>Audio analysis</span><span>LilyPond</span></div>
       </div>
     </article>
 
-    <article class="proj" id="p-jarvis" data-scene>
+    <article class="proj" id="p-jarvis">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="JARVIS screenshots. Use the arrow keys to move between slides.">
@@ -347,27 +286,32 @@
       </div>
       <div class="proj-body rv">
         <h3>JARVIS</h3>
-        <p>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a searchable memory, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js orb. It all runs on my own machine.</p>
+        <p data-stream>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a searchable memory, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js orb. It all runs on my own machine.</p>
         <div class="stack"><span>Voice AI</span><span>FastAPI</span><span>Three.js</span><span>WebSockets</span></div>
         <a class="proj-link" href="https://github.com/jakehorvitz/jarvis-pipeline">View on GitHub</a>
       </div>
     </article>
 
-    <article class="proj" id="p-horvitz-pipeline" data-scene>
+    <article class="proj" id="p-horvitz-pipeline">
       <div class="proj-media">
         <div class="frame">
-          <div class="vis vis-rail" role="img" aria-label="The ten pipeline stages drawn as a rail. Owner gates at kill-or-commit, spec sign-off, promote, and operate. A machine-verified gate at the build loop. Agent gates elsewhere. A signal travels through the gates in order.">
+          <div class="vis vis-rail" data-rail role="img" aria-label="The ten pipeline stages drawn as a rail. Owner gates at kill-or-commit, spec sign-off, promote, and operate. A machine-verified gate at the build loop. Agent gates elsewhere. A signal travels through the gates in order.">
+            <p class="rail-status" aria-hidden="true">
+              <svg class="pluck" viewBox="0 0 20 30"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg>
+              <span class="rail-verb">Interrogating</span>
+              <span class="rail-n">gate 01 of 10</span>
+            </p>
             <ol class="rail">
-              <li data-gate="agent"><b>01</b><span>Interrogate prompt</span><i>agent</i></li>
-              <li data-gate="owner"><b>02</b><span>Kill or commit</span><i>owner</i></li>
-              <li data-gate="owner"><b>03</b><span>Spec sign-off</span><i>owner</i></li>
-              <li data-gate="agent"><b>04</b><span>Council critique</span><i>agent</i></li>
-              <li data-gate="auto"><b>05</b><span>Build loop</span><i>auto</i></li>
-              <li data-gate="agent"><b>06</b><span>Adversarial review</span><i>agent</i></li>
-              <li data-gate="agent"><b>07</b><span>Staging validation</span><i>agent</i></li>
-              <li data-gate="owner"><b>08</b><span>Promote</span><i>Touch ID</i></li>
-              <li data-gate="step"><b>09</b><span>Present</span><i>step</i></li>
-              <li data-gate="owner"><b>10</b><span>Operate + learn</span><i>owner</i></li>
+              <li data-gate="agent" data-verb="Interrogating"><b>01</b><span>Interrogate prompt</span><i>agent</i></li>
+              <li data-gate="owner" data-verb="Waiting on Jake"><b>02</b><span>Kill or commit</span><i>owner</i></li>
+              <li data-gate="owner" data-verb="Waiting on Jake"><b>03</b><span>Spec sign-off</span><i>owner</i></li>
+              <li data-gate="agent" data-verb="Critiquing"><b>04</b><span>Council critique</span><i>agent</i></li>
+              <li data-gate="auto" data-verb="Looping until green"><b>05</b><span>Build loop</span><i>auto</i></li>
+              <li data-gate="agent" data-verb="Reviewing"><b>06</b><span>Adversarial review</span><i>agent</i></li>
+              <li data-gate="agent" data-verb="Staging"><b>07</b><span>Staging validation</span><i>agent</i></li>
+              <li data-gate="owner" data-verb="Waiting on Touch ID"><b>08</b><span>Promote</span><i>Touch ID</i></li>
+              <li data-gate="step" data-verb="Presenting"><b>09</b><span>Present</span><i>step</i></li>
+              <li data-gate="owner" data-verb="Operating"><b>10</b><span>Operate + learn</span><i>owner</i></li>
             </ol>
           </div>
           <p class="frame-cap">Amber gates need my verbatim words or a Touch ID token. The green gate opens only on the acceptance script's exit code.</p>
@@ -375,13 +319,13 @@
       </div>
       <div class="proj-body rv">
         <h3>Horvitz Pipeline</h3>
-        <p>An open-source ship pipeline for AI coding agents. Every gate is enforced by code, so an agent cannot skip the spec, the review, or the staging check. Ten stages, from kill-or-commit through a Touch ID promote step to an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
+        <p data-stream>An open-source ship pipeline for AI coding agents. Every gate is enforced by code, so an agent cannot skip the spec, the review, or the staging check. Ten stages, from kill-or-commit through a Touch ID promote step to an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
         <div class="stack"><span>Open source</span><span>Bash</span><span>Claude Code</span></div>
         <a class="proj-link" href="https://github.com/jakehorvitz/horvitzpipeline">View on GitHub</a>
       </div>
     </article>
 
-    <article class="proj" id="p-pikadelic" data-scene>
+    <article class="proj" id="p-pikadelic">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Pi-kadelic Brain screenshots. Use the arrow keys to move between slides.">
@@ -428,12 +372,12 @@
       </div>
       <div class="proj-body rv">
         <h3>Pi-kadelic Brain</h3>
-        <p>Event-operations platform for a 200-person fraternity. A 3D stage builder places the stage, truss, lighting, DJ booth, and dance floor on a model of the house, and a Design AI rearranges it from plain English. Live multi-user sync keeps the crew on one schedule. Budget, headcount, and inventory tracking sit next to an AI planner that writes the day's schedule and the materials list. Used to plan events of up to 350 people.</p>
+        <p data-stream>Event-operations platform for a 200-person fraternity. A 3D stage builder places the stage, truss, lighting, DJ booth, and dance floor on a model of the house, and a Design AI rearranges it from plain English. Live multi-user sync keeps the crew on one schedule. Budget, headcount, and inventory tracking sit next to an AI planner that writes the day's schedule and the materials list. Used to plan events of up to 350 people.</p>
         <div class="stack"><span>3D stage builder</span><span>Three.js</span><span>Real-time sync</span><span>LLM planner</span></div>
       </div>
     </article>
 
-    <article class="proj" id="p-shavit" data-scene>
+    <article class="proj" id="p-shavit">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Shavit Rootman website screenshots. Use the arrow keys to move between slides.">
@@ -468,13 +412,13 @@
       </div>
       <div class="proj-body rv">
         <h3>Shavit Rootman</h3>
-        <p>The website for a Midwest rental-housing operator I run marketing for. Two inventory buckets across Michigan, Ohio, and Indiana, deal case studies from purchase price to appraisal, an investor page, and a text message as the only conversion path. Statically generated React on Netlify, with a shell acceptance gate that has to pass before any deploy.</p>
+        <p data-stream>The website for a Midwest rental-housing operator I run marketing for. Two inventory buckets across Michigan, Ohio, and Indiana, deal case studies from purchase price to appraisal, an investor page, and a text message as the only conversion path. Statically generated React on Netlify, with a shell acceptance gate that has to pass before any deploy.</p>
         <div class="stack"><span>Vite</span><span>React SSG</span><span>Netlify</span><span>Real estate</span></div>
         <a class="proj-link" href="https://shavitrootman.com/">shavitrootman.com</a>
       </div>
     </article>
 
-    <article class="proj" id="p-michaels-jarvis" data-scene>
+    <article class="proj" id="p-michaels-jarvis">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Michael's Jarvis screenshots. Use the arrow keys to move between slides.">
@@ -505,12 +449,12 @@
       </div>
       <div class="proj-body rv">
         <h3>Michael's Jarvis</h3>
-        <p>A hosted AI chief of staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recaps that flow into his tracker, and persistent memory, behind one login. He brings his own API key, so it costs me nothing to run.</p>
+        <p data-stream>A hosted AI chief of staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recaps that flow into his tracker, and persistent memory, behind one login. He brings his own API key, so it costs me nothing to run.</p>
         <div class="stack"><span>Client AI product</span><span>Live on Fly.io</span></div>
       </div>
     </article>
 
-    <article class="proj" id="p-zero-knowledge" data-scene>
+    <article class="proj" id="p-zero-knowledge">
       <div class="proj-media">
         <div class="frame">
           <div class="vis vis-lock" role="img" aria-label="Five encrypted document rows shown as moving ciphertext. Only the row whose key matches turns readable.">
@@ -525,12 +469,12 @@
       </div>
       <div class="proj-body rv">
         <h3>Zero-Knowledge Client Intake</h3>
-        <p>An encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload financial documents that stay unreadable without a password delivered by push notification. An AI guide walks them through managing finances after a death. No plaintext credentials anywhere in the system.</p>
+        <p data-stream>An encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload financial documents that stay unreadable without a password delivered by push notification. An AI guide walks them through managing finances after a death. No plaintext credentials anywhere in the system.</p>
         <div class="stack"><span>Privacy by design</span><span>Encryption</span><span>AI guide</span></div>
       </div>
     </article>
 
-    <article class="proj" id="p-campaign" data-scene>
+    <article class="proj" id="p-campaign">
       <div class="proj-media">
         <div class="frame car" data-car>
           <div class="car-track" tabindex="0" aria-label="Campaign photos and analytics. Use the arrow keys to move between slides.">
@@ -563,15 +507,16 @@
       </div>
       <div class="proj-body rv">
         <h3>Campaign Analytics</h3>
-        <p>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website visitors to decide where to canvass and which clubs, sororities, and faith and music communities to visit. I won 1 of 12 seats from a field of 50 candidates.</p>
+        <p data-stream>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website visitors to decide where to canvass and which clubs, sororities, and faith and music communities to visit. I won 1 of 12 seats from a field of 50 candidates.</p>
         <div class="stack"><span>Analytics</span><span>Campaign operations</span></div>
       </div>
     </article>
   </div>
+  <div class="ink" data-ink aria-hidden="true"><canvas></canvas></div>
 </section>
 
 <section class="break" aria-label="A note on how this got built" data-scene="through">
-  <img src="assets/img/campaign/bass.jpg" alt="" loading="lazy" decoding="async">
+  <div class="break-photo"><img src="assets/img/campaign/bass.jpg" alt="" loading="lazy" decoding="async"></div>
   <div class="wrap">
     <blockquote class="rv">I taught myself to code to solve my own problems. Everything above shipped because the process remains strict when the team is a single person.<cite>Jake Horvitz. Also on bass.</cite></blockquote>
   </div>
@@ -579,8 +524,8 @@
 
 <section id="how" class="sec how">
   <div class="wrap">
-    <div class="sec-head rv" style="margin-bottom:0">
-      <h2>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
+    <div class="sec-head rv">
+      <h2 data-stream>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
       <p>A spec I sign, a council of models that critiques it, a build loop that closes only when the acceptance script passes, and me at every outbound trigger.</p>
     </div>
     <ol class="steps rv" data-scene="fill">
@@ -590,17 +535,18 @@
       <li class="step"><b>04</b><h3>Reusable skills</h3><p>The Claude Code skills that run all of this are public on GitHub.</p></li>
     </ol>
     <div class="how-links rv">
-      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/horvitzpipeline">Horvitz Pipeline on GitHub <span class="arrow">&nearr;</span></a>
-      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/jake-claude-skills">Claude Code skills pack <span class="arrow">&nearr;</span></a>
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/horvitzpipeline">Horvitz Pipeline on GitHub <span class="arrow" aria-hidden="true">&nearr;</span></a>
+      <a class="btn btn-ghost" href="https://github.com/jakehorvitz/jake-claude-skills">Claude Code skills pack <span class="arrow" aria-hidden="true">&nearr;</span></a>
     </div>
   </div>
+  <div class="ink" data-ink aria-hidden="true"><canvas></canvas></div>
 </section>
 
 <section id="now" class="sec now" aria-labelledby="now-title">
   <div class="wrap">
     <h2 id="now-title" class="rv">Now</h2>
     <article class="role rv">
-      <p class="role-when mono">October 2026 to present</p>
+      <p class="role-when">October 2026 to present</p>
       <div class="role-head">
         <h3>Campus Ambassador, UCSB</h3>
         <p class="role-org">Tokin' Jew</p>
@@ -611,16 +557,16 @@
 </section>
 
 <section id="contact" class="contact">
-  <canvas class="contact-strings" id="contactStrings" aria-hidden="true"></canvas>
   <div class="wrap rv">
-    <h2>Building something in music, entertainment, or AI? Email me.</h2>
+    <h2><span class="contact-line">Building something in music, entertainment, or AI? Email me.</span></h2>
     <p>I am at UC Santa Barbara through 2029 and take on AI and operations work alongside school.</p>
     <div class="contact-links">
-      <a class="btn btn-ink" href="mailto:jakeharrisonhorvitz@gmail.com">jakeharrisonhorvitz@gmail.com</a>
+      <a class="btn btn-paper" href="mailto:jakeharrisonhorvitz@gmail.com">jakeharrisonhorvitz@gmail.com</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/jakehorvitz/">LinkedIn</a>
       <a class="btn btn-ghost" href="https://github.com/jakehorvitz">GitHub</a>
     </div>
   </div>
+  <div class="ink ink--contact" data-ink="light" aria-hidden="true"><canvas></canvas></div>
 </section>
 
 <footer>
@@ -631,6 +577,5 @@
 </footer>
 
 <script src="app.js" defer></script>
-<script type="module" src="hero3d.js"></script>
 </body>
 </html>
