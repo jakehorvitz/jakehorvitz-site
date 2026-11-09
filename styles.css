@@ -362,15 +362,19 @@ html.intro-on .intro { display: block; position: fixed; inset: 0; z-index: var(-
 }
 .projects .sec-head { margin-bottom: clamp(1.5rem, 3vw, 2.4rem); }
 .show { position: relative; }
-.setlist { position: sticky; top: var(--nav-h); z-index: var(--z-sub); background: var(--bg-2); border-block: 1px solid var(--line); }
-.setlist-track { display: flex; gap: clamp(1.1rem, 2.2vw, 1.8rem); overflow-x: auto; scrollbar-width: none; max-width: var(--wrap); margin-inline: auto; padding: 0.85rem var(--gutter); }
-.setlist-track::-webkit-scrollbar { display: none; }
+.setlist { position: relative; z-index: var(--z-sub); background: var(--bg-2); border-block: 1px solid var(--line); }
+.setlist-track { display: flex; flex-wrap: wrap; gap: 0.55rem clamp(1.1rem, 2.2vw, 1.8rem); max-width: var(--wrap); margin-inline: auto; padding: 0.85rem var(--gutter); }
+@media (min-width: 1001px) {
+  .setlist { position: sticky; top: var(--nav-h); }
+  /* The project text rides beside its gallery while the shots scroll past (js/show.js measures --setlist-h). */
+  .proj { align-items: start; }
+  .proj-body { position: sticky; top: calc(var(--nav-h) + var(--setlist-h, 3rem) + 2rem); }
+}
 .setlist a { position: relative; font-size: 0.84rem; font-weight: 600; color: var(--tx-3); text-decoration: none; white-space: nowrap; transition: color 0.3s; padding-left: 0.85rem; }
 .setlist a::before { content: ""; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: var(--line-3); transition: background 0.3s, transform 0.4s var(--out), box-shadow 0.4s; }
 .setlist a:hover, .setlist a.is-on { color: var(--tx); }
 .setlist a.is-on::before { background: var(--mag); transform: scale(1.5); box-shadow: 0 0 10px 1px oklch(66% 0.235 354 / 0.8); }
 .show-track { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
-.ink--show { display: none; }
 
 .proj { display: grid; grid-template-columns: minmax(0, 1.38fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; padding-block: clamp(3.5rem, 8vw, 6rem); }
 .proj + .proj { border-top: 1px solid var(--line); }
@@ -381,50 +385,25 @@ html.intro-on .intro { display: block; position: fixed; inset: 0; z-index: var(-
 .proj-link:hover { color: var(--mag-hi); }
 .proj-link:hover::after { transform: translate(2px, -2px); }
 
-/* Pinned: the setlist holds still and the projects travel sideways (js/show.js owns the geometry). */
-.show.is-pinned .show-pin { position: sticky; top: var(--nav-h); height: calc(100svh - var(--nav-h)); overflow: hidden; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
-.show.is-pinned .setlist { position: relative; top: auto; background: transparent; border-top: 0; }
-.show.is-pinned .setlist-track { max-width: none; padding-inline: var(--show-left); }
-.show.is-pinned .show-track {
-  display: flex; align-items: center; gap: var(--show-gap); max-width: none; margin: 0; padding: 0 var(--show-left);
-  transform: translate3d(var(--show-x, 0px), 0, 0); will-change: transform;
-}
-.show.is-pinned .proj { flex: 0 0 var(--panel-w); height: 100%; padding: clamp(1rem, 3vh, 2rem) 0; border: 0; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); opacity: var(--o, 1); }
-.show.is-pinned .proj-media { transform: translate3d(var(--par, 0px), 0, 0); }
-.show.is-pinned .ink--show { display: block; height: clamp(64px, 9vh, 92px); }
-
-/* Media frame + carousel */
+/* Media frame + gallery */
 .frame {
   background: var(--bg-3); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
   box-shadow: 0 50px 90px -60px oklch(0% 0 0 / 0.9), 0 0 0 1px oklch(100% 0 0 / 0.02);
 }
 .frame-cap { padding: 0.85rem 1.1rem 1rem; font-size: 0.86rem; color: var(--tx-3); }
-.car { position: relative; }
-.car-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-.car-track::-webkit-scrollbar { display: none; }
-.car-track:focus-visible { outline-offset: -3px; }
-.car-slide { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; min-width: 0; }
-.car-slide img, .car-slide .vis { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; object-position: top center; background: var(--bg-4); }
-.car-slide.photo img { object-position: center 30%; }
-.car-slide figcaption { padding: 0.85rem 1.1rem 0; font-size: 0.86rem; color: var(--tx-3); min-height: 3.4rem; }
-.car-ui { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 1.1rem 1rem; }
-.car-dots { display: flex; gap: 0.35rem; flex: 1 1 0; min-width: 0; overflow: hidden; }
-.car-dot { position: relative; width: 26px; height: 16px; background: none; border: 0; cursor: pointer; padding: 0; }
-.car-dot::before, .car-dot::after { content: ""; position: absolute; left: 0; top: 7px; height: 2px; border-radius: 2px; }
-.car-dot::before { right: 0; background: var(--line-2); transition: background 0.3s; }
-.car-dot.is-on::before { background: var(--tx-3); }
-.car-dot::after { width: 0; background: var(--mag); }
-.car-dot.is-on::after { width: 100%; }
-.car.is-auto .car-dot.is-on::after { width: 0; animation: carfill 5.5s linear forwards; }
-@keyframes carfill { to { width: 100%; } }
-.car-btn {
-  flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line-3); background: transparent;
-  color: var(--tx); font-size: 0.95rem; cursor: pointer; display: grid; place-items: center; transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s var(--out);
-}
-.car-btn:hover { background: var(--tx); color: var(--bg); border-color: var(--tx); }
-.car-btn:active { transform: scale(0.93); }
-.car-count { flex: none; font-family: var(--font-mono); font-size: 0.64rem; color: var(--tx-3); min-width: 3.6em; text-align: right; font-variant-numeric: tabular-nums; }
-.car--single .car-ui { display: none; }
+/* Gallery: every shot stacks top to bottom. The first shot leads at full width, the rest sit two to a row,
+   and a lone last shot takes the whole row. */
+.gal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+.gal-item { margin: 0; min-width: 0; background: var(--bg-3); }
+.gal-item:first-child, .gal-item:last-child:nth-child(even) { grid-column: 1 / -1; }
+.gal-item img, .gal-item .vis { display: block; aspect-ratio: 16 / 9; width: 100%; object-fit: cover; object-position: top center; background: var(--bg-4); }
+.gal-item.photo img { object-position: center 30%; }
+/* Square galleries (portrait camera demos), and demo GIFs that keep their own frame. */
+.gal--square .gal-item img { aspect-ratio: 1 / 1; object-position: center; }
+.gal-item picture { display: block; }
+.gal-demo img { object-position: center; }
+.gal-item figcaption { padding: 0.7rem 0.95rem 0.9rem; font-size: 0.78rem; line-height: 1.45; color: var(--tx-3); }
+.gal-item:first-child figcaption, .gal-item:last-child:nth-child(even) figcaption { padding: 0.85rem 1.1rem 1rem; font-size: 0.86rem; }
 
 /* Visual: pipeline rail. A signal walks the gates; owner gates hold until Jake passes them. */
 .vis { aspect-ratio: 16 / 9; width: 100%; position: relative; overflow: hidden; background: var(--bg-4); }
@@ -506,6 +485,58 @@ html.intro-on .intro { display: block; position: fixed; inset: 0; z-index: var(-
 .break blockquote { font-size: clamp(1.9rem, 1rem + 3.4vw, 3.8rem); font-weight: 800; font-stretch: 106%; line-height: 1.04; letter-spacing: -0.03em; color: var(--tx); max-width: 22ch; text-wrap: balance; }
 .break cite { display: block; margin-top: 1.4rem; font-style: normal; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0; color: var(--gold); }
 
+/* ---------- The bass stage (WebGL2 only): the photo melts into the dark, and the same red bass hangs in 3D beside it.
+   js/bass.js frames the instrument inside .bass-spot, so this grid decides where it stands. ---------- */
+.bass-stage, .bass-spot, .bass-play { display: none; }
+.gl2 .break { min-height: min(100vh, 940px); align-items: stretch; }
+.gl2 .bass-stage {
+  display: block; position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s var(--out); touch-action: pan-y pinch-zoom;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+}
+.gl2 .break.is-ready .bass-stage { opacity: 1; }
+.gl2 .break-photo, .gl2 .break::before { right: 46%; -webkit-mask-image: linear-gradient(90deg, #000 42%, transparent 97%); mask-image: linear-gradient(90deg, #000 42%, transparent 97%); }
+/* Beside the bass, the curtain opens from the faded edge, the side the stage is on, toward the wall. */
+.gl2 .break-photo { clip-path: inset(0 0 0 calc((1 - clamp(0, var(--p) * 2.6 - 0.25, 1)) * 92%)); }
+.gl2 .break-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: clamp(1.5rem, 4vw, 4rem); padding-block: clamp(4rem, 7vw, 5.5rem) clamp(2.5rem, 5vw, 4rem); }
+.gl2 .break blockquote { grid-column: 1; grid-row: 1 / 3; align-self: end; font-size: clamp(1.9rem, 0.9rem + 2.4vw, 3.1rem); }
+.gl2 .bass-spot { display: block; grid-column: 2; grid-row: 1 / 3; min-height: 0; }
+.gl2 .bass-play {
+  display: grid; grid-column: 2; grid-row: 2; align-self: end; justify-items: end; gap: 0.8rem; text-align: right;
+  visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.7s var(--out) 0.6s, transform 0.9s var(--out) 0.6s, visibility 0s 0.6s;
+}
+.gl2 .break.is-ready .bass-play { visibility: visible; opacity: 1; transform: none; }
+.bass-read { display: flex; gap: 1.4rem; font-family: var(--font-mono); font-size: 0.76rem; color: var(--tx-2); font-variant-numeric: tabular-nums; }
+.bass-read [data-note] { display: inline-block; min-width: 3ch; color: var(--gold); transform-origin: 100% 60%; }
+.bass-read.hit [data-note] { animation: note-hit 0.9s var(--out); }
+@keyframes note-hit { from { transform: scale(1.35); text-shadow: 0 0 22px oklch(85% 0.15 84 / 0.95); } }
+.bass-row { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.6rem; }
+.bass-keys { display: flex; gap: 0.35rem; }
+.bass-keys button, .bass-sound {
+  height: 2.75rem; border-radius: 999px; border: 1px solid var(--line-3); background: rgb(var(--rgb-bg) / 0.55); color: var(--tx); cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.4s, transform 0.2s var(--out);
+}
+.bass-keys button { width: 2.75rem; font-family: var(--font-sans); font-size: 0.98rem; font-weight: 800; font-stretch: 112%; }
+.bass-sound { padding: 0 1.15rem; font-family: var(--font-mono); font-size: 0.72rem; }
+.bass-keys button:hover, .bass-sound:hover { border-color: var(--gold); color: var(--gold); }
+.bass-keys button:active, .bass-sound:active { transform: scale(0.94); }
+.bass-sound[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--bg); box-shadow: 0 0 28px -4px oklch(85% 0.15 84 / 0.7); }
+.bass-sound[aria-pressed="true"]:hover { color: var(--bg); }
+.bass-hint { font-size: 0.8rem; color: var(--tx-3); max-width: 46ch; }
+.bass-hint .touch { display: none; }
+@media (pointer: coarse) { .bass-hint .fine { display: none; } .bass-hint .touch { display: inline; } }
+/* Phone and tablet: the photo on top, the quote rising out of its fade, then the bass standing below it. */
+@media (max-width: 900px) {
+  .gl2 .break { display: block; min-height: 0; }
+  .gl2 .break-photo { position: relative; inset: auto; height: min(60svh, 540px); clip-path: none; }
+  .gl2 .break::before { right: 0; bottom: auto; height: min(60svh, 540px); }
+  .gl2 .break-photo, .gl2 .break::before { -webkit-mask-image: linear-gradient(180deg, #000 48%, transparent); mask-image: linear-gradient(180deg, #000 48%, transparent); }
+  .gl2 .break-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; margin-top: calc(-1 * min(20svh, 170px)); padding-block: 0 clamp(2.5rem, 8vw, 4rem); }
+  .gl2 .break blockquote, .gl2 .bass-spot, .gl2 .bass-play { grid-column: 1; grid-row: auto; }
+  .gl2 .bass-spot { height: min(66svh, 540px); margin-top: 1rem; }
+  .gl2 .bass-play { justify-items: start; text-align: left; }
+  .gl2 .bass-row { justify-content: flex-start; }
+}
+
 /* ---------- How I build: a magenta line runs down the steps as you read ---------- */
 .how .sec-head { margin-bottom: clamp(2rem, 5vw, 3.2rem); }
 .steps { list-style: none; border-top: 1px solid var(--line); position: relative; }
@@ -548,6 +579,88 @@ html.intro-on .intro { display: block; position: fixed; inset: 0; z-index: var(-
 
 footer { padding: 2rem 0; background: var(--bg); }
 footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem 1.5rem; font-family: var(--font-mono); font-size: 0.66rem; color: var(--tx-3); }
+
+/* ---------- Stage Night, pushed (2026-11-09): the light leaves the hero and works the whole room ---------- */
+
+/* The house rig sits behind every section: two gels that swing with the scroll and a followspot on the pointer (js/rig.js). */
+.rig { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; --sw: 0; --sw2: 0; }
+.rig-beam {
+  position: absolute; top: -8vh; width: 76vmax; height: 126vmax; margin-left: -38vmax; transform-origin: 50% 0; will-change: transform;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 88%); mask-image: linear-gradient(180deg, #000, transparent 88%);
+}
+.rig-a { left: 10%; background: conic-gradient(from 166deg at 50% 0, transparent 0deg, oklch(66% 0.235 354 / 0.22) 14deg, transparent 28deg); transform: rotate(calc(-27deg + var(--sw) * 13deg)); }
+.rig-b { left: 90%; background: conic-gradient(from 168deg at 50% 0, transparent 0deg, oklch(85% 0.15 84 / 0.14) 12deg, transparent 24deg); transform: rotate(calc(27deg - var(--sw2) * 13deg)); }
+.rig-spot {
+  position: absolute; left: -30vmax; top: -30vmax; width: 60vmax; height: 60vmax; border-radius: 50%; will-change: transform;
+  background: radial-gradient(closest-side, oklch(96% 0.03 60 / 0.07), transparent); opacity: 0; transition: opacity 0.8s var(--out);
+}
+.rig.has-spot .rig-spot { opacity: 1; }
+.projects { background: oklch(16.8% 0.02 345 / 0.62); }
+.band, footer { position: relative; }
+.agents { padding-bottom: clamp(2rem, 5vw, 4rem); }
+
+/* Section heads are set like the poster up top. */
+.sec-head h2 { text-transform: uppercase; font-stretch: 118%; font-size: clamp(2.1rem, 0.9rem + 4.3vw, 4.9rem); line-height: 0.96; letter-spacing: -0.02em; max-width: 21ch; }
+.btn-primary { box-shadow: 0 0 30px -10px oklch(66% 0.235 354 / 0.85); }
+
+/* Gaffer tape across the stage: the house rule slides sideways as the page scrolls past it. */
+.band { z-index: 1; overflow-x: clip; overflow-y: visible; padding-block: clamp(2.2rem, 5vw, 4.5rem); }
+.band-line {
+  display: flex; width: max-content; margin-left: -4vw; padding-block: 0.4em; background: var(--mag); color: var(--bg);
+  font-size: clamp(1.5rem, 4.4vw, 4rem); font-weight: 800; font-stretch: 125%; line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 0 90px -12px oklch(66% 0.235 354 / 0.65);
+  transform: rotate(-1.6deg) translate3d(calc(-4% - var(--p) * 20%), 0, 0); will-change: transform;
+}
+.band-line span { padding-left: 0.55em; }
+.band-line span::after { content: ""; display: inline-block; width: 0.3em; height: 0.3em; margin-left: 0.55em; border-radius: 50%; background: var(--bg); vertical-align: 0.2em; }
+
+/* Roster: each agent stands under its own gel, with the name set on the portrait like a tour poster. */
+.agent:nth-child(1) { --gel: oklch(66% 0.235 354 / 0.5); }
+.agent:nth-child(2) { --gel: oklch(85% 0.15 84 / 0.38); }
+.agent:nth-child(3) { --gel: oklch(92% 0.03 60 / 0.3); }
+.agent-call::before {
+  content: ""; position: absolute; left: 50%; top: -38%; width: 150%; height: 150%; margin-left: -75%; z-index: -1; pointer-events: none;
+  background: conic-gradient(from 161deg at 50% 0, transparent 0deg, var(--gel) 19deg, transparent 38deg);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 34%, transparent 92%); mask-image: linear-gradient(180deg, transparent, #000 34%, transparent 92%);
+  opacity: 0; transition: opacity 1.4s var(--out) 0.25s;
+}
+.agent.in .agent-call::before { opacity: 0.6; }
+.agent h3 { text-transform: uppercase; font-stretch: 118%; }
+@media (hover: hover) {
+  .agent.in:hover .agent-call::before { opacity: 1; transition-delay: 0s; transition-duration: 0.5s; }
+  .agent.in:hover .agent-face img { transform: scale(1.045); transition-delay: 0s; }
+}
+@media (min-width: 1001px) {
+  .agent-face::after { background: linear-gradient(180deg, transparent 46%, rgb(var(--rgb-bg) / 0.94) 97%), radial-gradient(90% 60% at 50% -10%, oklch(66% 0.235 354 / 0.22), transparent 70%); }
+  .agent-body { position: relative; }
+  .agent-head { position: absolute; left: 1.2rem; right: 1.2rem; bottom: calc(100% + 1.5rem + 1.1rem); }
+  .agent h3 { font-size: clamp(1.5rem, 0.5rem + 1.75vw, 2.25rem); }
+  .agent-body p { margin-top: 0; }
+}
+
+/* The show: whichever project is mid-screen takes the light, and the ones either side wait in the dark. */
+.proj:nth-child(odd) { --gel: 66% 0.235 354; }
+.proj:nth-child(even) { --gel: 85% 0.15 84; }
+.proj-media { position: relative; transition: opacity 0.8s var(--out), filter 0.8s var(--out); }
+.proj-media::before {
+  content: ""; position: absolute; inset: -14% -9%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, oklch(var(--gel) / 0.2), transparent); opacity: 0; transition: opacity 1s var(--out);
+}
+.frame { transition: box-shadow 0.9s var(--out), border-color 0.9s var(--out); }
+.rig-on .proj:not(.is-lit) .proj-media { opacity: 0.5; filter: saturate(0.5); }
+.proj.is-lit .proj-media::before { opacity: 1; }
+.proj.is-lit .frame { border-color: oklch(var(--gel) / 0.42); box-shadow: 0 60px 130px -55px oklch(var(--gel) / 0.6), 0 50px 90px -60px oklch(0% 0 0 / 0.9); }
+.proj-body h3 { text-transform: uppercase; font-stretch: 118%; font-size: clamp(1.75rem, 1.05rem + 1.9vw, 2.8rem); transition: text-shadow 0.9s var(--out); }
+.proj.is-lit .proj-body h3 { text-shadow: 0 0 46px oklch(var(--gel) / 0.5); }
+
+.step { transition: background 0.5s var(--out); }
+@media (hover: hover) { .step:hover { background: linear-gradient(90deg, oklch(66% 0.235 354 / 0.1), transparent 62%); } }
+
+@media (max-width: 1000px) { .agent-call::before { display: none; } }
+@media (max-width: 560px) {
+  .sec-head h2, .proj-body h3, .agent h3 { font-stretch: 100%; }
+  .band-line { font-stretch: 112%; }
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
@@ -597,7 +710,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .devices-cap { position: static; max-width: 70%; margin-top: 1.2rem; }
   .agent { grid-template-columns: 76px minmax(0, 1fr); }
   .agent-face, .call-ring { border-radius: 14px; }
-  .car-slide figcaption { min-height: 0; padding-bottom: 0.2rem; }
+  .gal-grid { grid-template-columns: minmax(0, 1fr); }
+  .gal-item figcaption { font-size: 0.82rem; }
   .vis-rail { padding: 0.7rem 0.8rem; }
   .rail li { padding-left: 1.2rem; grid-template-columns: 1.1rem minmax(0, 1fr); }
   .rail li i { display: none; }

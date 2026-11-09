@@ -29,6 +29,8 @@
    js/main.js takes it over; if the modules never arrive, the safety timer shows the finished page. */
 (function (c) {
   c.classList.add('js');
+  /* The bass stage lays out for 3D from the first paint, so the page never shifts under a deep link. */
+  if (window.WebGL2RenderingContext) c.classList.add('gl2');
   try {
     var force = /[?&]intro\b/.test(window.location.search);
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,6 +50,9 @@
 <body>
 
 <a class="skip" href="#agents">Skip to content</a>
+
+<!-- The house rig: two gels that swing as the page scrolls and a followspot on the pointer. It sits behind every section. -->
+<div class="rig" aria-hidden="true"><span class="rig-beam rig-a"></span><span class="rig-beam rig-b"></span><span class="rig-spot"></span></div>
 
 <!-- Soundcheck: a tuner on the low E string. The needle follows real loading; in tune, the string is plucked and the room opens. -->
 <div class="intro" id="intro" aria-hidden="true">
@@ -227,6 +232,9 @@
   </div>
 </section>
 
+<!-- Gaffer tape across the stage: the house rule, sliding with the scroll. Decorative; the rule is stated in the sections around it. -->
+<div class="band" data-scene="through" aria-hidden="true"><p class="band-line"><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span></p></div>
+
 <section id="projects" class="sec projects">
   <div class="wrap">
     <div class="sec-head rv">
@@ -235,11 +243,15 @@
     </div>
   </div>
 
-  <!-- The show: on a wide screen the setlist pins and the projects travel sideways as you scroll down. -->
+  <!-- The show: projects run top to bottom (Oct 21, Jake: the whole site is vertical). The setlist marks the one on screen. -->
   <div class="show" data-show>
     <div class="show-pin">
       <nav class="setlist" aria-label="Projects" data-setlist>
         <div class="setlist-track">
+          <a href="#p-earth10">EARTH 10 Midterm Prep</a>
+          <a href="#p-comm89">COMM 89 Weekly</a>
+          <a href="#p-invisible">Invisible Portal</a>
+          <a href="#p-album-particles">Album Particles</a>
           <a href="#p-songsheet">Songsheet</a>
           <a href="#p-jarvis">JARVIS</a>
           <a href="#p-horvitz-pipeline">Horvitz Pipeline</a>
@@ -253,36 +265,148 @@
 
       <div class="show-track">
 
+        <article class="proj" id="p-earth10">
+          <div class="proj-media">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="EARTH 10 Midterm Prep screenshots.">
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/mock-map.jpg" alt="A timed mock exam question asking which lettered point sits at 65 degrees south, 30 degrees west on a polar map of Antarctica, with the two-page cheat sheet open beside it." loading="lazy" decoding="async">
+                  <figcaption>A timed mock with the cheat sheet open beside it. Map questions use the same polar projection as the class map.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/sheet-back.jpg" alt="The back of the cheat sheet: two polar maps of Antarctica with labeled features and coordinates, and six labeled drawings of plate boundaries." loading="lazy" decoding="async">
+                  <figcaption>The back of the cheat sheet: both class maps, and every plate boundary drawn with what happens there.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/flagged-missed.jpg" alt="The Flagged and missed page showing a water-polarity question with the correct answer marked in green and the picked answer marked in red, plus its source." loading="lazy" decoding="async">
+                  <figcaption>Flagged and missed questions come back with my pick, the answer, and the source it came from. Fixture data.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/dms-drill.jpg" alt="A degrees, minutes, and seconds drill converting a decimal latitude and longitude into degree, minute, second, and hemisphere fields." loading="lazy" decoding="async">
+                  <figcaption>Degrees, minutes, and seconds drills, answered in the same format the lab asks for.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <h3>EARTH 10 Midterm Prep</h3>
+            <p data-stream>A study app for the midterm in my Earth science course on Antarctica. It holds 567 practice questions written from the lectures, labs, and quizzes, plus timed mock exams and coordinate drills on the class's own polar map. The two-page cheat sheet sits beside every question. I pin notes to any line of it or to any question I missed, and each note goes into the next revision of the sheet.</p>
+            <div class="stack"><span>Study app</span><span>Mock exams</span><span>SVG maps</span></div>
+          </div>
+        </article>
+
+        <article class="proj" id="p-comm89">
+          <div class="proj-media">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="COMM 89 Weekly screenshots.">
+                <figure class="gal-item">
+                  <img src="assets/img/comm89/today.jpg" alt="The COMM 89 Weekly home screen with today's study plan, a list of weeks one through five, and a midterm countdown in days, hours, and minutes." loading="lazy" decoding="async">
+                  <figcaption>The home screen: the plan for today, the countdown, and where I left off.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/comm89/week1.jpg" alt="Week 1 page titled Theory foundations and the research cycle, with a summary of what the lessons cover and which course sources they come from." loading="lazy" decoding="async">
+                  <figcaption>Each week opens with what its lessons cover and which course sources they come from.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/comm89/exam-guide.jpg" alt="The official Exam 1 concept checklist with counts of concepts reviewed, needing work, mapped to course material, and needing source coverage." loading="lazy" decoding="async">
+                  <figcaption>The official exam guide as a checklist, with each concept mapped to the material that teaches it.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/comm89/study-plan.jpg" alt="The study plan: one card per day with checkboxes for lessons, quizzes, and review, each linked to the page that covers it." loading="lazy" decoding="async">
+                  <figcaption>The study plan, one checklist per day until the exam.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <h3>COMM 89 Weekly</h3>
+            <p data-stream>Midterm prep for my communication theory course, laid out week by week. Each week has lessons and then a quiz, and every one of its 489 quiz questions points to the study-guide item that answers it. Before I trusted it, separate checker agents answered every week using only the guide. The home screen runs a countdown to the exam and a plan for the day.</p>
+            <div class="stack"><span>Study app</span><span>Checker agents</span><span>Week-by-week quizzes</span></div>
+          </div>
+        </article>
+
+        <article class="proj" id="p-invisible">
+          <div class="proj-media">
+            <div class="frame gal">
+              <div class="gal-grid gal--square" role="group" aria-label="Invisible Portal demo and screenshots.">
+                <figure class="gal-item gal-demo">
+                  <picture>
+                    <source srcset="assets/img/invisible/vanish-still.jpg" media="(prefers-reduced-motion: reduce)">
+                    <img src="assets/img/invisible/vanish.gif" width="480" height="480" alt="Looping demo: Jake smiles at the webcam, waves, and disappears into the empty room, leaving a glassy outline of his head and shoulders." loading="lazy" decoding="async">
+                  </picture>
+                  <figcaption>One wave and I am gone. The app learns the empty room and draws a glass outline where I was standing.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/invisible/relight-warm.jpg" alt="Jake lit by a warm point of light held at his fingertip, with the room falling into shadow." loading="lazy" decoding="async">
+                  <figcaption>Relight mode: the light sits on my index fingertip and relights my face from depth estimated in real time.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/invisible/relight-pink.jpg" alt="The same relight effect in pink after a fist gesture changed the light color." loading="lazy" decoding="async">
+                  <figcaption>A held fist cycles the light color.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <h3>Invisible Portal</h3>
+            <p data-stream>A webcam app I built to shoot reels on my MacBook camera. Wave a hand and I vanish into the empty room, leaving a glass outline that follows my body. A second mode puts a light on my fingertip and relights my face and the room from depth estimated in the browser. Hand signs switch modes, change the light color, and start a recording. It all runs locally in Chrome with no accounts.</p>
+            <div class="stack"><span>WebGL2</span><span>MediaPipe</span><span>Depth Anything V2</span></div>
+          </div>
+        </article>
+
+        <article class="proj" id="p-album-particles">
+          <div class="proj-media">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Album Particles demo and screenshots.">
+                <figure class="gal-item gal-demo">
+                  <picture>
+                    <source srcset="assets/img/album-particles/scene-still.jpg" media="(prefers-reduced-motion: reduce)">
+                    <img src="assets/img/album-particles/scene.gif" width="600" height="338" alt="Looping demo of Album Particles: gold particle ribbons swirl and settle into a glowing ring around floating neon shapes, then a ring-shaped shockwave expands outward." loading="lazy" decoding="async">
+                  </picture>
+                  <figcaption>The built-in procedural sample, made of original art: particles pour into an ember portal, and a clap sends a shockwave through the scene.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/album-particles/rune-mandala.jpg" alt="Album Particles with the rune mandala spell: gold geometric rings drawn in particles around the scene, with the line Neon shapes drift through midnight." loading="lazy" decoding="async">
+                  <figcaption>Spells frame the cover with original forms. This one is the rune mandala.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/album-particles/gesture-guide.jpg" alt="The gesture Guide panel showing two animated hands demonstrating the Bow gesture, with numbered setup steps." loading="lazy" decoding="async">
+                  <figcaption>The Guide plays a looping hand demo for each of the 13 gestures, with the setup and steps beside it.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <h3>Album Particles</h3>
+            <p data-stream>Hold an album cover up to the webcam and press Scan. Recognition runs on my own machine, with a bundled cover index, macOS text recognition, and a local Ollama model, and the top Spotify guess starts playing on my Mac. The cover then becomes a particle scene I shape with my hands: clap for a shockwave, turn two pinches to spin it, or raise a palm to levitate it. When a guess is uncertain, the app says so and keeps the correction controls on screen.</p>
+            <div class="stack"><span>Three.js</span><span>MediaPipe</span><span>Ollama</span><span>Spotify</span></div>
+          </div>
+        </article>
+
         <article class="proj" id="p-songsheet">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="Songsheet screenshots. Use the arrow keys to move between slides.">
-                <figure class="car-slide">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Songsheet screenshots.">
+                <figure class="gal-item">
                   <img src="assets/img/songsheet/whats-going-on.jpg" alt="Songsheet workspace showing a generated bass arrangement of What's Going On as tablature with chord names and a playback bar." loading="lazy" decoding="async">
                   <figcaption>What's Going On, bass. Every note in the arrangement cites its source.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/songsheet/playback-controls.jpg" alt="Songsheet playback controls and practice panels: source, arrangement, and compare modes, with per-measure source facts beside generated decisions." loading="lazy" decoding="async">
                   <figcaption>Practice panels. Where the arrangement departs from the record, the record's version sits beside it.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/songsheet/savoy-guitar.jpg" alt="Guitar chord-melody arrangement in drop-2 voicings rendered as tab, bars 17 through 32." loading="lazy" decoding="async">
                   <figcaption>Guitar chord-melody in drop-2 voicings. The bridge, bars 17 through 32.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/songsheet/peg-bass.jpg" alt="Peg, bass arrangement with intro and verse sections, loop controls, and a stems mixer for backing, bass, drums, guitar, horns, and keys." loading="lazy" decoding="async">
                   <figcaption>Peg, bass. Loop a section, mute a stem, play along.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/songsheet/guitar-draft.jpg" alt="Guitar chord-melody draft with four difficulty tiers and a verdict button on every bar." loading="lazy" decoding="async">
                   <figcaption>Four difficulty tiers of one melody. Rate each bar and the hand model adjusts.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -295,25 +419,23 @@
 
         <article class="proj" id="p-jarvis">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="JARVIS screenshots. Use the arrow keys to move between slides.">
-                <figure class="car-slide">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="JARVIS screenshots.">
+                <figure class="gal-item">
+                  <img src="assets/img/jarvis/bass.jpg" alt="JARVIS interface: a red 3D bass guitar on a dark stage above the message bar, with the status line reading listening." loading="lazy" decoding="async">
+                  <figcaption>Since October the orb is my red bass, built in Three.js. Its strings move with JARVIS's voice, and it walks a bass line while it thinks.</figcaption>
+                </figure>
+                <figure class="gal-item">
                   <img src="assets/img/jarvis/orb.jpg" alt="JARVIS interface: a white particle orb on black with a message input bar at the bottom." loading="lazy" decoding="async">
                   <figcaption>The audio-reactive orb, built in Three.js. It breathes when JARVIS talks.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <div class="vis vis-call" role="img" aria-label="A call card for JARVIS showing its avatar, a photoreal clone of Jake's face, with the readout connected, 16 cents per minute, zero dollars idle.">
                     <img src="assets/img/agents/avatar-jarvis.jpg" alt="" loading="lazy" decoding="async">
                     <div><b>JARVIS</b><span>butler wit &middot; wears my face</span><span class="mono"><i class="dot"></i>connected &middot; $0.16/min &middot; $0 idle</span></div>
                   </div>
                   <figcaption>On a video call, JARVIS wears a photorealistic clone of my face and bills only for the minutes we talk.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -360,46 +482,40 @@
 
         <article class="proj" id="p-pikadelic">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="Pi-kadelic Brain screenshots. Use the arrow keys to move between slides.">
-                <figure class="car-slide">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Pi-kadelic Brain screenshots.">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/stage-floorplan.jpg" alt="Pi-kadelic's 3D stage builder in perspective view: a wireframe model of the house lot with a stage, a truss carrying lights, a DJ booth, a dance floor, and a Design AI chat panel offering example instructions." loading="lazy" decoding="async">
                   <figcaption>The 3D stage builder with the house plan loaded: stage, truss, PAR cans, DJ booth, dance floor. Design AI rearranges it from plain English.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/stage-top.jpg" alt="Top-down plan view of the same 3D build on a grid, with the object palette on the left." loading="lazy" decoding="async">
                   <figcaption>Top view of the same build, the way the setup crew reads it on party day.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/stage-labels.jpg" alt="Perspective view of the 3D build with labels switched on so every object is named." loading="lazy" decoding="async">
                   <figcaption>Labels on, so the crew knows what goes where. Undo, redo, reset, and delete sit above the scene.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/tasks.jpg" alt="The schedule and build board for a fixture party: party info, push, send, templates, budget, crew, auto-assign, and groups controls, a task list under Build and setup, and a Claude planning panel." loading="lazy" decoding="async">
                   <figcaption>The schedule and build board: crew, auto-assign, templates, and a Claude panel that plans the day. Fixture data.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/brain.jpg" alt="Jarvis Brain view: an overall risk meter reading moderate, 44 of 100, with schedule, budget, crew effort, inventory, and weather tiles and a list of next critical actions." loading="lazy" decoding="async">
                   <figcaption>Jarvis Brain: one risk score from schedule, budget, inventory, and crew effort, then the next critical actions.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/inventory.jpg" alt="Materials inventory table listing paints, primers, brushes, lumber, and stage backdrops with quantities, units, and notes." loading="lazy" decoding="async">
                   <figcaption>Materials inventory with quantities and notes. Low-stock items feed straight into the Brain's restock list.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/planner.jpg" alt="The AI planner tab with prompt chips: what could go wrong, two-hour pre-party checklist, rate my setup plan, decor priorities." loading="lazy" decoding="async">
                   <figcaption>The AI planner: what could go wrong, the two-hour pre-party checklist, and a rating of the setup plan.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/pikadelic/critique.jpg" alt="The critique notes drawer open on the right side of the schedule, ready for a note tagged General." loading="lazy" decoding="async">
                   <figcaption>Critique notes: the crew logs what went wrong so the next party fixes it.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -412,34 +528,28 @@
 
         <article class="proj" id="p-shavit">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="Shavit Rootman website screenshots. Use the arrow keys to move between slides.">
-                <figure class="car-slide">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Shavit Rootman website screenshots.">
+                <figure class="gal-item">
                   <img src="assets/img/shavit/hero.jpg" alt="shavitrootman.com home page: a white farmhouse under a large tree with the headline Live with us. Learn about us. and a See available units button." loading="lazy" decoding="async">
                   <figcaption>Home. One promise up top, then the inventory across Michigan, Ohio, and Indiana in two buckets: available now and coming soon.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/shavit/case-studies.jpg" alt="Deal case studies section with three cards: Mead Street in Michigan, Clarendon Road in Ohio, Kendall Street in Indiana, each with purchase and appraisal figures." loading="lazy" decoding="async">
                   <figcaption>Deal case studies: three rebuilds documented from purchase price to appraisal.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/shavit/work-with-us.jpg" alt="One stop shop section with three panels: rent with us for tenants, invest with us for investors, sell us your home for home sellers." loading="lazy" decoding="async">
                   <figcaption>One page for tenants, investors, and home sellers, each with a single next step.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/shavit/meet.jpg" alt="Meet our founder section with a circular portrait of Shavit Rootman and LinkedIn and Instagram buttons." loading="lazy" decoding="async">
                   <figcaption>Meet the founder. The copy is his words. I built the structure and shipped it.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/shavit/phone.jpg" alt="The shavitrootman.com home page on a phone." loading="lazy" decoding="async">
                   <figcaption>Most visitors arrive from a text or Instagram, so the phone view is the one that matters.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -453,30 +563,24 @@
 
         <article class="proj" id="p-michaels-jarvis">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="Michael's Jarvis screenshots. Use the arrow keys to move between slides.">
-                <figure class="car-slide">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Michael's Jarvis screenshots.">
+                <figure class="gal-item">
                   <img src="assets/img/michaels/dashboard.jpg" alt="Dashboard render reading Good morning, Michael, with drafts ready, contacts qualified, meetings this week, and tiles for Agent Chat, LinkedIn Engine, Recap to Tracker, Calendar Advisor, and Contact Extractor." loading="lazy" decoding="async">
                   <figcaption>The morning view: drafts ready, contacts qualified, and the five tools. Design render with sample data.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/michaels/setup.jpg" alt="Welcome to Jarvis setup screen with connections for an AI key and Google Calendar, plus three numbered setup steps." loading="lazy" decoding="async">
                   <figcaption>First run: bring your own key, connect a calendar, done.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/michaels/contacts.jpg" alt="Contact extractor render: pull, enrich, qualify against the ideal customer profile, with a table of sample contacts, fit scores, and verdicts." loading="lazy" decoding="async">
                   <figcaption>Contact extractor: pull, enrich, qualify against his ideal customer profile. Design render with sample names.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <img src="assets/img/michaels/login.jpg" alt="Login render over a mountain photograph with a single Unlock command center button." loading="lazy" decoding="async">
                   <figcaption>One login, his own API key, his own data.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -509,13 +613,13 @@
 
         <article class="proj" id="p-campaign">
           <div class="proj-media">
-            <div class="frame car" data-car>
-              <div class="car-track" tabindex="0" aria-label="Campaign photos and analytics. Use the arrow keys to move between slides.">
-                <figure class="car-slide photo">
+            <div class="frame gal">
+              <div class="gal-grid" role="group" aria-label="Campaign photos and analytics.">
+                <figure class="gal-item photo">
                   <img src="assets/img/campaign/bass.jpg" alt="Jake Horvitz playing a red bass guitar on stage under magenta and amber lights, a drum kit behind him." loading="lazy" decoding="async">
                   <figcaption>The music communities were a canvassing target. I was already playing in them.</figcaption>
                 </figure>
-                <figure class="car-slide">
+                <figure class="gal-item">
                   <div class="vis vis-chart" role="img" aria-label="Bar chart of website visits by day over two weeks, with the three highest days highlighted.">
                     <div class="bars">
                       <span style="--i:0;height:30%"></span><span style="--i:1;height:42%"></span><span style="--i:2;height:38%"></span><span style="--i:3;height:66%"></span><span style="--i:4;height:50%"></span><span class="hot" style="--i:5;height:84%"></span><span style="--i:6;height:58%"></span>
@@ -525,16 +629,10 @@
                   </div>
                   <figcaption>Visits by day. The peaks told me which appearances worked and where to show up next.</figcaption>
                 </figure>
-                <figure class="car-slide photo">
+                <figure class="gal-item photo">
                   <img src="assets/img/campaign/headshot.jpg" alt="Campaign headshot of Jake Horvitz in a light blue shirt against a grey backdrop." loading="lazy" decoding="async">
                   <figcaption>The campaign headshot, spring 2026. One of twelve seats from a field of fifty.</figcaption>
                 </figure>
-              </div>
-              <div class="car-ui">
-                <button class="car-btn" type="button" data-prev aria-label="Previous slide">&larr;</button>
-                <div class="car-dots" aria-hidden="true"></div>
-                <button class="car-btn" type="button" data-next aria-label="Next slide">&rarr;</button>
-                <span class="car-count" aria-live="polite"></span>
               </div>
             </div>
           </div>
@@ -546,15 +644,31 @@
         </article>
       </div>
 
-      <div class="ink ink--show" data-ink="frets" aria-hidden="true"><canvas></canvas></div>
     </div>
   </div>
 </section>
 
-<section class="break" aria-label="A note on how this got built" data-scene="through">
+<!-- The bass stage: the gig photo melts into the dark, and the same red bass hangs in 3D under the room's gels.
+     It turns into the light as you pass; strum it, fret it, and with sound on it plays. Without WebGL2 it stays the photo break. -->
+<section class="break" aria-label="A note on how this got built" data-scene="through" data-bass>
+  <canvas class="bass-stage" aria-hidden="true"></canvas>
   <div class="break-photo"><img src="assets/img/campaign/bass.jpg" alt="" loading="lazy" decoding="async"></div>
-  <div class="wrap">
+  <div class="wrap break-grid">
     <blockquote class="rv">I taught myself to code to solve my own problems. Everything above shipped because the process remains strict when the team is a single person.<cite>Jake Horvitz. Also on bass.</cite></blockquote>
+    <div class="bass-spot" aria-hidden="true"></div>
+    <div class="bass-play">
+      <p class="bass-read" aria-hidden="true"><span data-note>E1</span><span data-hz>41.20 Hz</span></p>
+      <div class="bass-row">
+        <div class="bass-keys" role="group" aria-label="Pluck an open string">
+          <button type="button" data-string="0" aria-label="Pluck the E string">E</button>
+          <button type="button" data-string="1" aria-label="Pluck the A string">A</button>
+          <button type="button" data-string="2" aria-label="Pluck the D string">D</button>
+          <button type="button" data-string="3" aria-label="Pluck the G string">G</button>
+        </div>
+        <button class="bass-sound" type="button" aria-pressed="false">Sound off</button>
+      </div>
+      <p class="bass-hint"><span class="fine">Strum across the strings. Click the neck to fret a note.</span><span class="touch">Tap a string. Tap it on the neck to fret a note.</span></p>
+    </div>
   </div>
 </section>
 

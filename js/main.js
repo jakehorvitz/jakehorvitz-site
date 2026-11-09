@@ -9,10 +9,11 @@ import { runIntro } from './intro.js';
 import { initNav } from './nav.js';
 import { InkLine } from './ink.js';
 import { initShow } from './show.js';
-import { initCarousel } from './carousel.js';
 import { initRail } from './rail.js';
 import { initScenes } from './scenes.js';
 import { initReveals, initStreams } from './reveal.js';
+import { initBass } from './bass.js';
+import { initRig } from './rig.js';
 
 const root = document.documentElement;
 const heroEl = $('#top');
@@ -37,11 +38,11 @@ runIntro({
 });
 
 initNav();
-const inks = $$('[data-ink]').map((box) => ({ box, api: InkLine(box) }));
-const showInk = inks.find((k) => k.box.getAttribute('data-ink') === 'frets');
-initShow($('[data-show]'), showInk && showInk.api);
-$$('[data-car]').forEach(initCarousel);
+$$('[data-ink]').forEach((box) => InkLine(box));
+initShow($('[data-show]'));
 $$('[data-rail]').forEach(initRail);
 initScenes();
+initBass($('[data-bass]'), { gl: stage.gl });
 initStreams();
 initReveals();
+initRig();
