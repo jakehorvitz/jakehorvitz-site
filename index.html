@@ -51,8 +51,16 @@
 
 <a class="skip" href="#agents">Skip to content</a>
 
-<!-- The house rig: two gels that swing as the page scrolls and a followspot on the pointer. It sits behind every section. -->
-<div class="rig" aria-hidden="true"><span class="rig-beam rig-a"></span><span class="rig-beam rig-b"></span><span class="rig-spot"></span></div>
+<!-- The house rig: two gels that swing as the page scrolls, two lasers, a followspot on the pointer, and the Strip outside. It sits behind every section. -->
+<div class="rig" aria-hidden="true"><span class="rig-beam rig-a"></span><span class="rig-beam rig-b"></span><span class="rig-laser rig-c"></span><span class="rig-laser rig-d"></span><span class="rig-spot"></span>
+  <!-- The Sunset Strip at night: two generated night views of its clubs, joined end to end, with the album on the billboard. It travels sideways as the page scrolls. -->
+  <div class="strip"><div class="strip-roll">
+    <div class="strip-shot"><img src="assets/img/strip/strip-west.jpg" alt="" width="1680" height="720" decoding="async"></div>
+    <div class="strip-shot"><img src="assets/img/strip/strip-east.jpg" alt="" width="1680" height="720" decoding="async">
+      <div class="billboard"><img src="assets/img/album/cover.jpg" alt="" width="900" height="900" decoding="async"><p><b>Corrections</b><b>and</b><b>Reflections</b><span>Out now</span></p></div>
+    </div>
+  </div></div>
+</div>
 
 <!-- Soundcheck: a tuner on the low E string. The needle follows real loading; in tune, the string is plucked and the room opens. -->
 <div class="intro" id="intro" aria-hidden="true">
@@ -87,6 +95,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#agents">Agents</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#album">Album</a></li>
       <li><a href="#how">How I build</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a class="ext" href="https://github.com/jakehorvitz" rel="me">GitHub</a></li>
@@ -248,8 +257,7 @@
     <div class="show-pin">
       <nav class="setlist" aria-label="Projects" data-setlist>
         <div class="setlist-track">
-          <a href="#p-earth10">EARTH 10 Midterm Prep</a>
-          <a href="#p-comm89">COMM 89 Weekly</a>
+          <a href="#p-academic">Academic Master</a>
           <a href="#p-invisible">Invisible Portal</a>
           <a href="#p-album-particles">Album Particles</a>
           <a href="#p-songsheet">Songsheet</a>
@@ -265,63 +273,50 @@
 
       <div class="show-track">
 
-        <article class="proj" id="p-earth10">
+        <article class="proj" id="p-academic">
           <div class="proj-media">
             <div class="frame gal">
-              <div class="gal-grid" role="group" aria-label="EARTH 10 Midterm Prep screenshots.">
+              <div class="gal-grid" role="group" aria-label="Academic Master study app screenshots.">
                 <figure class="gal-item">
                   <img src="assets/img/earth10/mock-map.jpg" alt="A timed mock exam question asking which lettered point sits at 65 degrees south, 30 degrees west on a polar map of Antarctica, with the two-page cheat sheet open beside it." loading="lazy" decoding="async">
-                  <figcaption>A timed mock with the cheat sheet open beside it. Map questions use the same polar projection as the class map.</figcaption>
+                  <figcaption>EARTH 10: a timed mock with the cheat sheet open beside it. Map questions use the same polar projection as the class map.</figcaption>
                 </figure>
                 <figure class="gal-item">
-                  <img src="assets/img/earth10/sheet-back.jpg" alt="The back of the cheat sheet: two polar maps of Antarctica with labeled features and coordinates, and six labeled drawings of plate boundaries." loading="lazy" decoding="async">
-                  <figcaption>The back of the cheat sheet: both class maps, and every plate boundary drawn with what happens there.</figcaption>
+                  <img src="assets/img/comm89/today.jpg" alt="The COMM 89 Weekly home screen with today's study plan, a list of weeks one through five, and a midterm countdown in days, hours, and minutes." loading="lazy" decoding="async">
+                  <figcaption>COMM 89: the home screen, with the plan for today, the countdown, and where I left off.</figcaption>
                 </figure>
                 <figure class="gal-item">
                   <img src="assets/img/earth10/flagged-missed.jpg" alt="The Flagged and missed page showing a water-polarity question with the correct answer marked in green and the picked answer marked in red, plus its source." loading="lazy" decoding="async">
-                  <figcaption>Flagged and missed questions come back with my pick, the answer, and the source it came from. Fixture data.</figcaption>
-                </figure>
-                <figure class="gal-item">
-                  <img src="assets/img/earth10/dms-drill.jpg" alt="A degrees, minutes, and seconds drill converting a decimal latitude and longitude into degree, minute, second, and hemisphere fields." loading="lazy" decoding="async">
-                  <figcaption>Degrees, minutes, and seconds drills, answered in the same format the lab asks for.</figcaption>
-                </figure>
-              </div>
-            </div>
-          </div>
-          <div class="proj-body">
-            <h3>EARTH 10 Midterm Prep</h3>
-            <p data-stream>A study app for the midterm in my Earth science course on Antarctica. It holds 567 practice questions written from the lectures, labs, and quizzes, plus timed mock exams and coordinate drills on the class's own polar map. The two-page cheat sheet sits beside every question. I pin notes to any line of it or to any question I missed, and each note goes into the next revision of the sheet.</p>
-            <div class="stack"><span>Study app</span><span>Mock exams</span><span>SVG maps</span></div>
-          </div>
-        </article>
-
-        <article class="proj" id="p-comm89">
-          <div class="proj-media">
-            <div class="frame gal">
-              <div class="gal-grid" role="group" aria-label="COMM 89 Weekly screenshots.">
-                <figure class="gal-item">
-                  <img src="assets/img/comm89/today.jpg" alt="The COMM 89 Weekly home screen with today's study plan, a list of weeks one through five, and a midterm countdown in days, hours, and minutes." loading="lazy" decoding="async">
-                  <figcaption>The home screen: the plan for today, the countdown, and where I left off.</figcaption>
-                </figure>
-                <figure class="gal-item">
-                  <img src="assets/img/comm89/week1.jpg" alt="Week 1 page titled Theory foundations and the research cycle, with a summary of what the lessons cover and which course sources they come from." loading="lazy" decoding="async">
-                  <figcaption>Each week opens with what its lessons cover and which course sources they come from.</figcaption>
+                  <figcaption>EARTH 10: flagged and missed questions come back with my pick, the answer, and the source it came from. Fixture data.</figcaption>
                 </figure>
                 <figure class="gal-item">
                   <img src="assets/img/comm89/exam-guide.jpg" alt="The official Exam 1 concept checklist with counts of concepts reviewed, needing work, mapped to course material, and needing source coverage." loading="lazy" decoding="async">
-                  <figcaption>The official exam guide as a checklist, with each concept mapped to the material that teaches it.</figcaption>
+                  <figcaption>COMM 89: the official exam guide as a checklist, with each concept mapped to the material that teaches it.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/sheet-back.jpg" alt="The back of the cheat sheet: two polar maps of Antarctica with labeled features and coordinates, and six labeled drawings of plate boundaries." loading="lazy" decoding="async">
+                  <figcaption>EARTH 10: the back of the cheat sheet, with both class maps and every plate boundary drawn with what happens there.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/comm89/week1.jpg" alt="Week 1 page titled Theory foundations and the research cycle, with a summary of what the lessons cover and which course sources they come from." loading="lazy" decoding="async">
+                  <figcaption>COMM 89: each week opens with what its lessons cover and which course sources they come from.</figcaption>
+                </figure>
+                <figure class="gal-item">
+                  <img src="assets/img/earth10/dms-drill.jpg" alt="A degrees, minutes, and seconds drill converting a decimal latitude and longitude into degree, minute, second, and hemisphere fields." loading="lazy" decoding="async">
+                  <figcaption>EARTH 10: degrees, minutes, and seconds drills, answered in the same format the lab asks for.</figcaption>
                 </figure>
                 <figure class="gal-item">
                   <img src="assets/img/comm89/study-plan.jpg" alt="The study plan: one card per day with checkboxes for lessons, quizzes, and review, each linked to the page that covers it." loading="lazy" decoding="async">
-                  <figcaption>The study plan, one checklist per day until the exam.</figcaption>
+                  <figcaption>COMM 89: the study plan, one checklist per day until the exam.</figcaption>
                 </figure>
               </div>
             </div>
           </div>
           <div class="proj-body">
-            <h3>COMM 89 Weekly</h3>
-            <p data-stream>Midterm prep for my communication theory course, laid out week by week. Each week has lessons and then a quiz, and every one of its 489 quiz questions points to the study-guide item that answers it. Before I trusted it, separate checker agents answered every week using only the guide. The home screen runs a countdown to the exam and a plan for the day.</p>
-            <div class="stack"><span>Study app</span><span>Checker agents</span><span>Week-by-week quizzes</span></div>
+            <h3>Academic Master</h3>
+            <p data-stream>One coordinator for my three UCSB courses this fall. It reads my calendar, and after each class it checks Canvas, Drive, and Notion for anything new, keeps the original files with checksums, and writes notes that point back to the page or slide they came from. Each course has its own tutor that answers from what has actually been read and says when something is locked or unread. It never submits graded work or opens a quiz.</p>
+            <p>Two study apps came out of it. EARTH 10 Midterm Prep holds 567 practice questions written from the lectures, labs, and quizzes, plus timed mocks and coordinate drills on the class's own polar map. COMM 89 Weekly runs week by week, and each of its 489 quiz questions points to the study-guide item that answers it. Before I trusted it, separate checker agents answered every week using only the guide.</p>
+            <div class="stack"><span>Course brains</span><span>Source-linked tutors</span><span>Study apps</span><span>Checker agents</span></div>
           </div>
         </article>
 
@@ -668,6 +663,37 @@
         <button class="bass-sound" type="button" aria-pressed="false">Sound off</button>
       </div>
       <p class="bass-hint"><span class="fine">Strum across the strings. Click the neck to fret a note.</span><span class="touch">Tap a string. Tap it on the neck to fret a note.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- The guitar wall: a generated image of the club's back wall, between the bass and the record. -->
+<div class="wall" data-scene="through"><img src="assets/img/strip/guitar-wall.jpg" alt="Six guitars hanging on a dark brick club wall under magenta and amber lights: a sunburst archtop, a cream solid-body electric, a black single-cutaway electric, an acoustic, a red semi-hollow, and a red bass." width="2000" height="857" loading="lazy" decoding="async"></div>
+
+<!-- The record: Jake's jazz EP. Facts from the Apple Music and Spotify listings (title, tracks, times, release date, catalog name). -->
+<section id="album" class="sec album" aria-labelledby="album-title">
+  <div class="ball" aria-hidden="true"><span class="ball-orb"></span></div>
+  <div class="ball-light" aria-hidden="true"></div>
+  <div class="wrap album-grid">
+    <div class="record rv">
+      <div class="record-disc" aria-hidden="true"></div>
+      <div class="record-sleeve"><img src="assets/img/album/cover.jpg" alt="Album cover: a black and white photo of Jake playing upright bass under the title Corrections and Reflections, an album by Jake Horvitz." width="900" height="900" loading="lazy" decoding="async"></div>
+    </div>
+    <div class="album-body">
+      <div class="sec-head rv">
+        <h2 id="album-title" data-stream>Corrections and Reflections</h2>
+        <p>My first album: a four-track jazz EP featuring Beau Chiasson, released October 24, 2025. It is on Spotify and Apple Music under the name Jake Harrison.</p>
+      </div>
+      <ol class="tracks rv">
+        <li><span class="track-name">Feathering The Break</span><span class="track-time">6:03</span><span class="track-feat">feat. Sam Rather, Hugh Cheng, Arthur Dong, Mateo Bautista, Beau Chiasson &amp; David Clymer</span></li>
+        <li><span class="track-name">It's Me Again</span><span class="track-time">5:14</span><span class="track-feat">feat. Sam Rather &amp; Beau Chiasson</span></li>
+        <li><span class="track-name">No Promises</span><span class="track-time">4:07</span><span class="track-feat">feat. Sam Rather &amp; Beau Chiasson</span></li>
+        <li><span class="track-name">Ay Dios Mio!</span><span class="track-time">5:25</span><span class="track-feat">feat. David Clymer, Mateo Bautista, Ishaan Natarajan, Hugh Cheng, Arthur Dong &amp; Beau Chiasson</span></li>
+      </ol>
+      <div class="album-links rv">
+        <a class="btn btn-primary" href="https://open.spotify.com/album/36UPFN5p6rAQeGgXLT1TyU">Listen on Spotify <span class="arrow" aria-hidden="true">&nearr;</span></a>
+        <a class="btn btn-ghost" href="https://music.apple.com/us/album/corrections-and-reflections-feat-beau-chiasson-ep/1849159340">Apple Music <span class="arrow" aria-hidden="true">&nearr;</span></a>
+      </div>
     </div>
   </div>
 </section>

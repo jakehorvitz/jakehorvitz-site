@@ -2,7 +2,7 @@
 
 import { $, $$, clamp, rm, hasIO, Pluck, swapText } from './lib.js';
 
-const VERBS = { top: 'Drafting', agents: 'Calling', projects: 'Shipping', how: 'Reviewing', now: 'Planning', contact: 'Waiting on you' };
+const VERBS = { top: 'Drafting', agents: 'Calling', projects: 'Shipping', album: 'Playing', how: 'Reviewing', now: 'Planning', contact: 'Waiting on you' };
 
 /* Report the id of whichever target crosses the middle band of the viewport. */
 export function spy(targets, onChange) {
