@@ -1,10 +1,8 @@
 /* The hero: the headline set on the four strings (E, A, D, G), its letters riding whatever the strings do,
    and the opening that plays once the soundcheck hands over the stage: each line drops onto its string as
-   an arpeggio, the tagline streams in, and the three agents check in. */
+   an arpeggio, then the copy and the three agents fade up. */
 
-import { rm, coarse, hasIO, $, $$, clamp, pad, seconds, addTick, Pluck, swapText, tokenize, stream } from './lib.js';
-
-const WORK = ['Tuning', 'Interrogating', 'Specifying', 'Drafting', 'Queueing', 'Building', 'Reviewing', 'Staging'];
+import { rm, hasIO, $, $$, clamp, seconds, addTick } from './lib.js';
 
 export function initHero({ hero, strings, stage }) {
   const title = $('#heroTitle'), lines = $$('.hl-line', title);
@@ -90,16 +88,6 @@ export function initHero({ hero, strings, stage }) {
   }
   strings.onPluck(() => { if (!riding && !rm) { riding = true; addTick(ride); } });
 
-  /* Session clock: real time on the page, nothing invented. */
-  const clock = $('#sessionClock'), born = Date.now();
-  if (clock) {
-    window.setInterval(() => {
-      if (document.hidden) return;
-      const s = Math.floor((Date.now() - born) / 1000);
-      clock.textContent = pad(Math.floor(s / 60) % 100) + ':' + pad(s % 60);
-    }, 1000);
-  }
-
   /* A repeat visit skips the soundcheck; the band still says hello with one soft E-A-D-G. */
   function idle() {
     if (rm) return;
@@ -108,32 +96,11 @@ export function initHero({ hero, strings, stage }) {
     }, 650);
   }
 
+  /* The opening: each line falls onto its string as an arpeggio, then the copy and the agents fade up together. */
   function play() {
-    const status = $('#heroStatus'), statusText = $('#statusText'), meta = $('#statusMeta'), tag = $('#heroTagline');
-    const main = Pluck($('#heroPluck'));
     const rows = $$('.checkin', hero);
-    const quotes = rows.map((r) => $('q', r));
-    const finals = quotes.map((q) => q.textContent);
-    const plucks = rows.map((r) => Pluck($('.pluck', r)));
-    const FINAL = statusText.textContent;
-    const streams = [];
-    let skipped = false, verbTimer = 0, metaTimer = 0, beatTimer = 0;
-
-    tokenize(tag);
-    tag.classList.add('streaming');
-    quotes.forEach((q) => { q.textContent = ''; });
-    statusText.textContent = WORK[0];
-    statusText.classList.add('shimmer');
-    statusText.setAttribute('aria-hidden', 'true');
+    let skipped = false;
     hero.classList.add('playing');
-
-    let secs = 0, wi = 0;
-    const hint = coarse ? 'Tap to skip' : 'Click or press any key to skip';
-    meta.textContent = '0s · ' + hint;
-    metaTimer = window.setInterval(() => { secs++; meta.textContent = secs + 's · ' + hint; }, 1000);
-    verbTimer = window.setInterval(() => { wi = (wi + 1) % WORK.length; swapText(statusText, WORK[wi]); }, 700);
-    main.pluck(5.5);
-    beatTimer = window.setInterval(() => main.pluck(5.5), 950);
 
     const wait = (ms) => new Promise((res, rej) => window.setTimeout(() => (skipped ? rej('skip') : res()), ms));
 
@@ -151,77 +118,25 @@ export function initHero({ hero, strings, stage }) {
       });
       return wait(440 + Math.floor(list.length / 2) * 22).then(() => strings.pluck(i, mid ? mid.u : 0.4, 17 - i * 2.2));
     }
-    function type(q, text) {
-      q.classList.add('caret');
-      q.textContent = '';
-      let i = 0;
-      const next = () => {
-        if (i >= text.length) return wait(260).then(() => q.classList.remove('caret'));
-        q.textContent += text.charAt(i++);
-        return wait(26 + Math.random() * 22).then(next);
-      };
-      return next();
-    }
-    function erase(q) {
-      q.classList.add('caret');
-      const next = () => {
-        if (!q.textContent.length) return Promise.resolve();
-        q.textContent = q.textContent.slice(0, -1);
-        return wait(14).then(next);
-      };
-      return next();
-    }
-    function speak(k, text) {
-      rows[k].classList.add('is-speaking');
-      plucks[k].pluck(6);
-      return type(quotes[k], text).then(() => rows[k].classList.remove('is-speaking'));
-    }
-    function settleStatus() {
-      window.clearInterval(verbTimer); window.clearInterval(metaTimer); window.clearInterval(beatTimer);
-      statusText.classList.remove('shimmer');
-      statusText.removeAttribute('aria-hidden');
-      status.classList.add('is-done');
-    }
-    function cleanup() {
-      window.setTimeout(() => hero.classList.remove('playing', 'cta-in'), 900);
+    function settle() {
+      hero.classList.add('copy-in');
+      rows.forEach((r) => r.classList.add('in'));
+      window.setTimeout(() => hero.classList.remove('playing', 'copy-in'), 1400);
       ['pointerdown', 'keydown'].forEach((ev) => window.removeEventListener(ev, skip, true));
     }
     function skip(e) {
       if (skipped) return;
       if (e && e.type === 'pointerdown' && !hero.contains(e.target)) return;
       skipped = true;
-      streams.forEach((s) => s.finish());
       chars.forEach((list) => list.forEach((c) => { c.el.classList.add('in'); if (c.drop) c.drop.finish(); }));
-      (tag.__toks || []).forEach((t) => t.classList.add('on'));
-      hero.classList.add('cta-in');
-      rows.forEach((r, k) => { r.classList.add('in'); r.classList.remove('is-speaking'); quotes[k].classList.remove('caret'); quotes[k].textContent = finals[k]; });
-      settleStatus();
-      statusText.textContent = FINAL;
-      cleanup();
+      settle();
     }
     ['pointerdown', 'keydown'].forEach((ev) => window.addEventListener(ev, skip, { capture: true, passive: true }));
     if (hasIO) new IntersectionObserver((entries) => entries.forEach((en) => { if (!en.isIntersecting) skip(); })).observe(title);
 
     wait(120)
       .then(() => Promise.all([0, 1, 2, 3].map((i) => wait(i * 300).then(() => drop(i)))))
-      .then(() => wait(160))
-      .then(() => { const s = stream(tag, 2.6); streams.push(s); return s.done; })
-      .then(() => { hero.classList.add('cta-in'); return wait(260); })
-      .then(() => rows.reduce((p, r) => p.then(() => { r.classList.add('in'); return wait(160); }), Promise.resolve()))
-      .then(() => wait(320))
-      .then(() => speak(0, finals[0]))
-      .then(() => speak(1, 'Task accepted'))
-      .then(() => wait(620))
-      .then(() => erase(quotes[1]))
-      .then(() => speak(1, finals[1]))
-      .then(() => speak(2, finals[2]))
-      .then(() => {
-        settleStatus();
-        swapText(statusText, FINAL);
-        main.pluck(7);
-        skipped = true;
-        cleanup();
-      })
+      .then(() => { skipped = true; settle(); })
       .catch(() => { /* skipped: skip() already painted the finished state */ });
   }
 

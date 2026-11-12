@@ -11,9 +11,8 @@ import { InkLine } from './ink.js';
 import { initShow } from './show.js';
 import { initRail } from './rail.js';
 import { initScenes } from './scenes.js';
-import { initReveals, initStreams } from './reveal.js';
+import { initReveals } from './reveal.js';
 import { initBass } from './bass.js';
-import { initRig } from './rig.js';
 
 const root = document.documentElement;
 const heroEl = $('#top');
@@ -43,6 +42,4 @@ initShow($('[data-show]'));
 $$('[data-rail]').forEach(initRail);
 initScenes();
 initBass($('[data-bass]'), { gl: stage.gl });
-initStreams();
 initReveals();
-initRig();

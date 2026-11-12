@@ -1,4 +1,4 @@
-/* Shared helpers: one frame loop, the string glyph, status-line swaps, and streamed text. */
+/* Shared helpers: one frame loop, the string glyph, and status-line swaps. */
 
 export const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const coarse = window.matchMedia('(pointer: coarse)').matches;
@@ -67,45 +67,4 @@ export function swapText(el, text) {
     el.textContent = text;
     el.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'cubic-bezier(.16,1,.3,1)' });
   };
-}
-
-/* ---------- Streamed text: words arrive in chunks of one to three, blur to sharp ---------- */
-export function tokenize(el) {
-  if (el.__toks) return el.__toks;
-  const words = el.textContent.replace(/\s+/g, ' ').trim().split(' ');
-  el.textContent = '';
-  el.__toks = words.map((w, i) => {
-    const s = document.createElement('span');
-    s.className = 'tok';
-    s.textContent = w;
-    el.appendChild(s);
-    if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
-    return s;
-  });
-  return el.__toks;
-}
-export function stream(el, speed) {
-  const toks = tokenize(el);
-  let i = 0, timer = 0, done = false, resolve;
-  const promise = new Promise((r) => { resolve = r; });
-  el.classList.add('streaming');
-  void el.offsetWidth;
-  function finish() {
-    if (done) return;
-    done = true;
-    window.clearTimeout(timer);
-    toks.forEach((t) => t.classList.add('on'));
-    window.setTimeout(() => el.classList.remove('streaming'), 900);
-    resolve();
-  }
-  function step() {
-    if (done) return;
-    const n = Math.min(toks.length - i, 1 + Math.floor(Math.random() * 3));
-    for (let k = 0; k < n; k++) toks[i + k].classList.add('on');
-    i += n;
-    if (i >= toks.length) { finish(); return; }
-    timer = window.setTimeout(step, (55 + Math.random() * 90) / speed);
-  }
-  step();
-  return { done: promise, finish };
 }

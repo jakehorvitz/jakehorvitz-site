@@ -136,8 +136,8 @@ export function runIntro({ root, stage, strings, tasks, onHandoff }) {
         phase = 'gone';
         window.removeEventListener('keydown', skip);
         window.removeEventListener('resize', layout);
-        onHandoff();
         root.classList.remove('intro-on');
+        onHandoff();
         return false;
       }
       return true;
@@ -149,8 +149,8 @@ export function runIntro({ root, stage, strings, tasks, onHandoff }) {
     // forced under reduced motion (?intro): no needle chase, just the readout, then the page
     Promise.race([Promise.all(tasks), new Promise((r) => window.setTimeout(r, 1500))]).then(() => {
       readout(0);
-      onHandoff();
       root.classList.remove('intro-on');
+      onHandoff();
     });
     return;
   }
@@ -160,8 +160,8 @@ export function runIntro({ root, stage, strings, tasks, onHandoff }) {
     phase = 'gone';
     window.removeEventListener('keydown', skip);
     window.removeEventListener('resize', layout);
-    onHandoff();
     root.classList.remove('intro-on');
+    onHandoff();
   }
   window.setTimeout(bail, CAP_MS + 4000);
   window.requestAnimationFrame(function loop(now) {

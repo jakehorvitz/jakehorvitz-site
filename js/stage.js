@@ -47,12 +47,12 @@ void main() {
 
   float b1 = beam(p, vec2(asp * 0.1, -0.15), 0.42 + 0.09 * sin(t * 0.23), 0.16);
   float b2 = beam(p, vec2(asp * 0.92, -0.15), -0.44 + 0.08 * sin(t * 0.19 + 1.7), 0.14);
-  // Three moving heads between the gels. They idle low and flare when the strings ring.
+  // Three moving heads between the gels. Dark at rest; they come up only while the strings ring.
   float m1 = beam(p, vec2(asp * 0.34, -0.12), 0.55 * sin(t * 0.31), 0.05);
   float m2 = beam(p, vec2(asp * 0.50, -0.12), 0.50 * sin(t * 0.27 + 2.1), 0.05);
   float m3 = beam(p, vec2(asp * 0.66, -0.12), 0.55 * sin(t * 0.36 + 4.0), 0.05);
-  vec3 movers = (uMag * m1 + vec3(1.0, 0.93, 0.9) * m2 * 0.55 + uGold * m3) * (0.3 + 0.9 * uEnergy);
-  vec3 light = ((uMag * b1 * 1.1 + uGold * b2 * 0.8) * (1.0 + 0.12 * uEnergy) + movers) * haze * uHouse;
+  vec3 movers = (uMag * m1 + vec3(1.0, 0.93, 0.9) * m2 * 0.55 + uGold * m3) * (0.4 * uEnergy);
+  vec3 light = ((uMag * b1 * 0.85 + uGold * b2 * 0.6) * (1.0 + 0.12 * uEnergy) + movers) * haze * uHouse;
 
   vec2 dp = (fc - uPtr.xy) / uRes.y;
   light += vec3(1.0, 0.9, 0.86) * exp(-dot(dp, dp) / 0.02) * uPtr.z * 0.16 * (0.5 + 0.5 * haze);

@@ -1,4 +1,4 @@
-/* Nav: scrolled state, page progress, the mobile menu, and a status verb that follows the section you are in. */
+/* Nav: scrolled state, page progress, the mobile menu, and the active link for the section you are in. */
 
 import { $, $$, clamp, rm, hasIO, Pluck, swapText } from './lib.js';
 
@@ -36,18 +36,8 @@ export function initNav() {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && links.classList.contains('is-open')) { set(false); toggle.focus(); } });
   }
 
-  const verb = $('.nav-verb'), glyph = Pluck($('.nav-status .pluck'));
   const anchors = $$('.nav-links a[href^="#"]');
-  let shimmer = 0;
   spy(Object.keys(VERBS).map((id) => document.getElementById(id)), (id) => {
     anchors.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
-    if (!verb || verb.textContent === VERBS[id]) return;
-    swapText(verb, VERBS[id]);
-    glyph.pluck(5);
-    if (!rm) {
-      verb.classList.add('shimmer');
-      window.clearTimeout(shimmer);
-      shimmer = window.setTimeout(() => verb.classList.remove('shimmer'), 2200);
-    }
   });
 }

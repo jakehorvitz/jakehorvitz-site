@@ -51,17 +51,6 @@
 
 <a class="skip" href="#agents">Skip to content</a>
 
-<!-- The house rig: two gels that swing as the page scrolls, two lasers, a followspot on the pointer, and the Strip outside. It sits behind every section. -->
-<div class="rig" aria-hidden="true"><span class="rig-beam rig-a"></span><span class="rig-beam rig-b"></span><span class="rig-laser rig-c"></span><span class="rig-laser rig-d"></span><span class="rig-spot"></span>
-  <!-- The Sunset Strip at night: two generated night views of its clubs, joined end to end, with the album on the billboard. It travels sideways as the page scrolls. -->
-  <div class="strip"><div class="strip-roll">
-    <div class="strip-shot"><img src="assets/img/strip/strip-west.jpg" alt="" width="1680" height="720" decoding="async"></div>
-    <div class="strip-shot"><img src="assets/img/strip/strip-east.jpg" alt="" width="1680" height="720" decoding="async">
-      <div class="billboard"><img src="assets/img/album/cover.jpg" alt="" width="900" height="900" decoding="async"><p><b>Corrections</b><b>and</b><b>Reflections</b><span>Out now</span></p></div>
-    </div>
-  </div></div>
-</div>
-
 <!-- Soundcheck: a tuner on the low E string. The needle follows real loading; in tune, the string is plucked and the room opens. -->
 <div class="intro" id="intro" aria-hidden="true">
   <div class="intro-half intro-top">
@@ -85,10 +74,6 @@
   <span class="nav-progress" aria-hidden="true"></span>
   <div class="wrap">
     <a href="#top" class="mark">Jake Horvitz</a>
-    <span class="nav-status" aria-hidden="true">
-      <svg class="pluck" viewBox="0 0 20 30"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg>
-      <span class="nav-verb">Drafting</span>
-    </span>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
       <span></span>
     </button>
@@ -109,11 +94,6 @@
   <div class="stage-fallback" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <p class="hero-readout"><span>Jake Horvitz</span><span>Santa Barbara / Los Angeles</span><span>AI &times; live music</span><span>UC Santa Barbara</span></p>
-    <p class="status" id="heroStatus">
-      <svg class="pluck" id="heroPluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg>
-      <span class="status-text" id="statusText">Nothing outbound leaves without me.</span>
-      <span class="status-meta" id="statusMeta" aria-hidden="true"></span>
-    </p>
     <h1 class="hero-title" id="heroTitle">
       <span class="sr-only">I build the tools you need and run the operations behind them.</span>
       <span class="hl" aria-hidden="true"><span class="hl-line">I build the tools</span> <span class="hl-line">you need and run</span> <span class="hl-line">the operations</span> <span class="hl-line">behind them.</span></span>
@@ -129,7 +109,7 @@
       </div>
 
       <aside class="session" aria-label="The three agents">
-        <p class="session-head"><span>Agent FaceTime</span><span class="session-clock" id="sessionClock" aria-hidden="true">00:00</span></p>
+        <p class="session-head"><span>Agent FaceTime</span></p>
         <ol class="session-log">
           <li>
             <a class="checkin" href="#agent-bartok">
@@ -137,7 +117,7 @@
               <span class="checkin-body">
                 <span class="checkin-name">Bartok</span>
                 <span class="checkin-tag">revenue agent &middot; all business</span>
-                <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>that is queued for your approval</q></span>
+                <span class="checkin-line"><q>that is queued for your approval</q></span>
               </span>
             </a>
           </li>
@@ -147,7 +127,7 @@
               <span class="checkin-body">
                 <span class="checkin-name">JARVIS</span>
                 <span class="checkin-tag">butler wit &middot; wears my face</span>
-                <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>Build accepted</q></span>
+                <span class="checkin-line"><q>Build accepted</q></span>
               </span>
             </a>
           </li>
@@ -157,7 +137,7 @@
               <span class="checkin-body">
                 <span class="checkin-name">The Philosopher</span>
                 <span class="checkin-tag">counsel &middot; one-year horizon</span>
-                <span class="checkin-line"><svg class="pluck" viewBox="0 0 20 30" aria-hidden="true"><path class="ghost g1"/><path class="ghost g2"/><path class="str" d="M10 3 Q 10 15 10 27"/><circle cx="10" cy="3" r="1.7"/><circle cx="10" cy="27" r="1.7"/></svg><q>that is a handoff</q></span>
+                <span class="checkin-line"><q>that is a handoff</q></span>
               </span>
             </a>
           </li>
@@ -170,7 +150,7 @@
 <section id="agents" class="sec agents">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2 data-stream>Three agents. They draft, I send.</h2>
+      <h2>Three agents. They draft, I send.</h2>
       <p>Bartok finds work, JARVIS runs errands, and the Philosopher asks questions. I video-call all three through Agent FaceTime, a mobile portal I built where each one shows up as a photoreal avatar. I say a trigger word mid-call, a runner on my Mac or a cloud droplet picks up the task, and the agent reads the result back on the call.</p>
     </div>
 
@@ -241,13 +221,10 @@
   </div>
 </section>
 
-<!-- Gaffer tape across the stage: the house rule, sliding with the scroll. Decorative; the rule is stated in the sections around it. -->
-<div class="band" data-scene="through" aria-hidden="true"><p class="band-line"><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span><span>Nothing outbound leaves without me.</span></p></div>
-
 <section id="projects" class="sec projects">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2 data-stream>Every one of these runs in production for a real user.</h2>
+      <h2>Every one of these runs in production for a real user.</h2>
       <p>Screenshots are from staging with fixture data wherever a live view would show someone else's information.</p>
     </div>
   </div>
@@ -314,7 +291,7 @@
           </div>
           <div class="proj-body">
             <h3>Academic Master</h3>
-            <p data-stream>One coordinator for my three UCSB courses this fall. It reads my calendar, and after each class it checks Canvas, Drive, and Notion for anything new, keeps the original files with checksums, and writes notes that point back to the page or slide they came from. Each course has its own tutor that answers from what has actually been read and says when something is locked or unread. It never submits graded work or opens a quiz.</p>
+            <p>One coordinator for my three UCSB courses this fall. It reads my calendar, and after each class it checks Canvas, Drive, and Notion for anything new, keeps the original files with checksums, and writes notes that point back to the page or slide they came from. Each course has its own tutor that answers from what has actually been read and says when something is locked or unread. It never submits graded work or opens a quiz.</p>
             <p>Two study apps came out of it. EARTH 10 Midterm Prep holds 567 practice questions written from the lectures, labs, and quizzes, plus timed mocks and coordinate drills on the class's own polar map. COMM 89 Weekly runs week by week, and each of its 489 quiz questions points to the study-guide item that answers it. Before I trusted it, separate checker agents answered every week using only the guide.</p>
             <div class="stack"><span>Course brains</span><span>Source-linked tutors</span><span>Study apps</span><span>Checker agents</span></div>
           </div>
@@ -344,7 +321,7 @@
           </div>
           <div class="proj-body">
             <h3>Invisible Portal</h3>
-            <p data-stream>A webcam app I built to shoot reels on my MacBook camera. Wave a hand and I vanish into the empty room, leaving a glass outline that follows my body. A second mode puts a light on my fingertip and relights my face and the room from depth estimated in the browser. Hand signs switch modes, change the light color, and start a recording. It all runs locally in Chrome with no accounts.</p>
+            <p>A webcam app I built to shoot reels on my MacBook camera. Wave a hand and I vanish into the empty room, leaving a glass outline that follows my body. A second mode puts a light on my fingertip and relights my face and the room from depth estimated in the browser. Hand signs switch modes, change the light color, and start a recording. It all runs locally in Chrome with no accounts.</p>
             <div class="stack"><span>WebGL2</span><span>MediaPipe</span><span>Depth Anything V2</span></div>
           </div>
         </article>
@@ -373,7 +350,7 @@
           </div>
           <div class="proj-body">
             <h3>Album Particles</h3>
-            <p data-stream>Hold an album cover up to the webcam and press Scan. Recognition runs on my own machine, with a bundled cover index, macOS text recognition, and a local Ollama model, and the top Spotify guess starts playing on my Mac. The cover then becomes a particle scene I shape with my hands: clap for a shockwave, turn two pinches to spin it, or raise a palm to levitate it. When a guess is uncertain, the app says so and keeps the correction controls on screen.</p>
+            <p>Hold an album cover up to the webcam and press Scan. Recognition runs on my own machine, with a bundled cover index, macOS text recognition, and a local Ollama model, and the top Spotify guess starts playing on my Mac. The cover then becomes a particle scene I shape with my hands: clap for a shockwave, turn two pinches to spin it, or raise a palm to levitate it. When a guess is uncertain, the app says so and keeps the correction controls on screen.</p>
             <div class="stack"><span>Three.js</span><span>MediaPipe</span><span>Ollama</span><span>Spotify</span></div>
           </div>
         </article>
@@ -407,7 +384,7 @@
           </div>
           <div class="proj-body">
             <h3>Songsheet</h3>
-            <p data-stream>Give it a song and an instrument, get playable sheet music and tab. It finds existing transcriptions, checks the melody against the recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. Three engines vote on pitch, octave, and rhythm so a bass part never lands in the wrong octave.</p>
+            <p>Give it a song and an instrument, get playable sheet music and tab. It finds existing transcriptions, checks the melody against the recording with chroma key-shift and tempo autocorrelation, and renders through my own ABC parser to LilyPond. Three engines vote on pitch, octave, and rhythm so a bass part never lands in the wrong octave.</p>
             <div class="stack"><span>Music AI</span><span>Audio analysis</span><span>LilyPond</span></div>
           </div>
         </article>
@@ -436,7 +413,7 @@
           </div>
           <div class="proj-body">
             <h3>JARVIS</h3>
-            <p data-stream>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a searchable memory, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js orb. It all runs on my own machine.</p>
+            <p>A local, voice-first assistant that runs my calendar, mail, and notes, keeps a searchable memory, and spawns its own coding agents to build what I ask for. FastAPI, the Claude API, WebSockets, and a Three.js orb. It all runs on my own machine.</p>
             <div class="stack"><span>Voice AI</span><span>FastAPI</span><span>Three.js</span><span>WebSockets</span></div>
             <a class="proj-link" href="https://github.com/jakehorvitz/jarvis-pipeline">View on GitHub</a>
           </div>
@@ -469,7 +446,7 @@
           </div>
           <div class="proj-body">
             <h3>Horvitz Pipeline</h3>
-            <p data-stream>An open-source ship pipeline for AI coding agents. Every gate is enforced by code, so an agent cannot skip the spec, the review, or the staging check. Ten stages, from kill-or-commit through a Touch ID promote step to an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
+            <p>An open-source ship pipeline for AI coding agents. Every gate is enforced by code, so an agent cannot skip the spec, the review, or the staging check. Ten stages, from kill-or-commit through a Touch ID promote step to an operate-or-learn call after seven days. I used it to build version 2.0 of itself.</p>
             <div class="stack"><span>Open source</span><span>Bash</span><span>Claude Code</span></div>
             <a class="proj-link" href="https://github.com/jakehorvitz/horvitzpipeline">View on GitHub</a>
           </div>
@@ -516,7 +493,7 @@
           </div>
           <div class="proj-body">
             <h3>Pi-kadelic Brain</h3>
-            <p data-stream>Event-operations platform for a 200-person fraternity. A 3D stage builder places the stage, truss, lighting, DJ booth, and dance floor on a model of the house, and a Design AI rearranges it from plain English. Live multi-user sync keeps the crew on one schedule. Budget, headcount, and inventory tracking sit next to an AI planner that writes the day's schedule and the materials list. Used to plan events of up to 350 people.</p>
+            <p>Event-operations platform for a 200-person fraternity. A 3D stage builder places the stage, truss, lighting, DJ booth, and dance floor on a model of the house, and a Design AI rearranges it from plain English. Live multi-user sync keeps the crew on one schedule. Budget, headcount, and inventory tracking sit next to an AI planner that writes the day's schedule and the materials list. Used to plan events of up to 350 people.</p>
             <div class="stack"><span>3D stage builder</span><span>Three.js</span><span>Real-time sync</span><span>LLM planner</span></div>
           </div>
         </article>
@@ -550,7 +527,7 @@
           </div>
           <div class="proj-body">
             <h3>Shavit Rootman</h3>
-            <p data-stream>The website for a Midwest rental-housing operator I run marketing for. Two inventory buckets across Michigan, Ohio, and Indiana, deal case studies from purchase price to appraisal, an investor page, and a text message as the only conversion path. Statically generated React on Netlify, with a shell acceptance gate that has to pass before any deploy.</p>
+            <p>The website for a Midwest rental-housing operator I run marketing for. Two inventory buckets across Michigan, Ohio, and Indiana, deal case studies from purchase price to appraisal, an investor page, and a text message as the only conversion path. Statically generated React on Netlify, with a shell acceptance gate that has to pass before any deploy.</p>
             <div class="stack"><span>Vite</span><span>React SSG</span><span>Netlify</span><span>Real estate</span></div>
             <a class="proj-link" href="https://shavitrootman.com/">shavitrootman.com</a>
           </div>
@@ -581,7 +558,7 @@
           </div>
           <div class="proj-body">
             <h3>Michael's Jarvis</h3>
-            <p data-stream>A hosted AI chief of staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recaps that flow into his tracker, and persistent memory, behind one login. He brings his own API key, so it costs me nothing to run.</p>
+            <p>A hosted AI chief of staff for a media business-development executive: a LinkedIn drafting engine, a calendar advisor, meeting recaps that flow into his tracker, and persistent memory, behind one login. He brings his own API key, so it costs me nothing to run.</p>
             <div class="stack"><span>Client AI product</span><span>Live on Fly.io</span></div>
           </div>
         </article>
@@ -601,7 +578,7 @@
           </div>
           <div class="proj-body">
             <h3>Zero-Knowledge Client Intake</h3>
-            <p data-stream>An encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload financial documents that stay unreadable without a password delivered by push notification. An AI guide walks them through managing finances after a death. No plaintext credentials anywhere in the system.</p>
+            <p>An encrypted intake system for an estate financial-planning program at Cheviot Value Management. Clients upload financial documents that stay unreadable without a password delivered by push notification. An AI guide walks them through managing finances after a death. No plaintext credentials anywhere in the system.</p>
             <div class="stack"><span>Privacy by design</span><span>Encryption</span><span>AI guide</span></div>
           </div>
         </article>
@@ -633,7 +610,7 @@
           </div>
           <div class="proj-body">
             <h3>Campaign Analytics</h3>
-            <p data-stream>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website visitors to decide where to canvass and which clubs, sororities, and faith and music communities to visit. I won 1 of 12 seats from a field of 50 candidates.</p>
+            <p>The web app I built to run my Associated Students Senate campaign at UC Santa Barbara. It tracked website visitors to decide where to canvass and which clubs, sororities, and faith and music communities to visit. I won 1 of 12 seats from a field of 50 candidates.</p>
             <div class="stack"><span>Analytics</span><span>Campaign operations</span></div>
           </div>
         </article>
@@ -667,13 +644,8 @@
   </div>
 </section>
 
-<!-- The guitar wall: a generated image of the club's back wall, between the bass and the record. -->
-<div class="wall" data-scene="through"><img src="assets/img/strip/guitar-wall.jpg" alt="Six guitars hanging on a dark brick club wall under magenta and amber lights: a sunburst archtop, a cream solid-body electric, a black single-cutaway electric, an acoustic, a red semi-hollow, and a red bass." width="2000" height="857" loading="lazy" decoding="async"></div>
-
 <!-- The record: Jake's jazz EP. Facts from the Apple Music and Spotify listings (title, tracks, times, release date, catalog name). -->
 <section id="album" class="sec album" aria-labelledby="album-title">
-  <div class="ball" aria-hidden="true"><span class="ball-orb"></span></div>
-  <div class="ball-light" aria-hidden="true"></div>
   <div class="wrap album-grid">
     <div class="record rv">
       <div class="record-disc" aria-hidden="true"></div>
@@ -681,7 +653,7 @@
     </div>
     <div class="album-body">
       <div class="sec-head rv">
-        <h2 id="album-title" data-stream>Corrections and Reflections</h2>
+        <h2 id="album-title">Corrections and Reflections</h2>
         <p>My first album: a four-track jazz EP featuring Beau Chiasson, released October 24, 2025. It is on Spotify and Apple Music under the name Jake Harrison.</p>
       </div>
       <ol class="tracks rv">
@@ -701,14 +673,14 @@
 <section id="how" class="sec how">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2 data-stream>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
+      <h2>One person, Claude Code, and a pipeline that does not let me skip steps.</h2>
       <p>A spec I sign, a council of models that critiques it, a build loop that closes only when the acceptance script passes, and me at every outbound trigger.</p>
     </div>
     <ol class="steps rv" data-scene="fill">
-      <li class="step"><b>01</b><h3>Spec first, then a council</h3><p>Every build starts with a written spec I sign, then a multi-model review before any code is written.</p></li>
-      <li class="step"><b>02</b><h3>Acceptance-verified loops</h3><p>The build loop closes only when a pinned acceptance script passes, so an agent cannot declare itself done.</p></li>
-      <li class="step"><b>03</b><h3>Agents draft, I send</h3><p>Nothing outbound leaves without me. Bartok, JARVIS, and every client tool follow the same rule.</p></li>
-      <li class="step"><b>04</b><h3>Reusable skills</h3><p>The Claude Code skills that run all of this are public on GitHub.</p></li>
+      <li class="step"><h3>Spec first, then a council</h3><p>Every build starts with a written spec I sign, then a multi-model review before any code is written.</p></li>
+      <li class="step"><h3>Acceptance-verified loops</h3><p>The build loop closes only when a pinned acceptance script passes, so an agent cannot declare itself done.</p></li>
+      <li class="step"><h3>Agents draft, I send</h3><p>Nothing outbound leaves without me. Bartok, JARVIS, and every client tool follow the same rule.</p></li>
+      <li class="step"><h3>Reusable skills</h3><p>The Claude Code skills that run all of this are public on GitHub.</p></li>
     </ol>
     <div class="how-links rv">
       <a class="btn btn-ghost" href="https://github.com/jakehorvitz/horvitzpipeline">Horvitz Pipeline on GitHub <span class="arrow" aria-hidden="true">&nearr;</span></a>
@@ -748,7 +720,7 @@
 <footer>
   <div class="wrap">
     <span>&copy; 2026 Jake Horvitz</span>
-    <span>Built with Claude Code. Updated October 2026.</span>
+    <span>Built with Claude Code. Updated November 2026.</span>
   </div>
 </footer>
 
