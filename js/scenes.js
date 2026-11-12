@@ -6,6 +6,11 @@ import { $, $$, clamp, rm, easeOut, easeInOut } from './lib.js';
 function sceneP(el, r, vh) {
   const mode = el.getAttribute('data-scene');
   if (mode === 'through') return clamp((vh - r.top) / (vh + r.height), 0, 1);
+  if (mode === 'pin') {
+    // progress through the pinned stretch: 0 when the child sticks, 1 when it lets go
+    const child = el.firstElementChild, top = parseFloat(getComputedStyle(child).top) || 0;
+    return clamp((top - r.top) / Math.max(1, r.height - child.offsetHeight), 0, 1);
+  }
   if (mode === 'fill') return clamp((vh * 0.8 - r.top) / Math.max(1, r.height), 0, 1);
   return easeOut(clamp((vh - r.top) / (vh * 0.62), 0, 1));
 }

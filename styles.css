@@ -565,11 +565,12 @@ footer { position: relative; }
 }
 
 /* ---------- Scene break: the Strip outside ----------
-   The street travels sideways as the break passes (js/scenes.js sets --p). Nothing sits on top of the photo. */
-.band { position: relative; z-index: 1; overflow: clip; }
+   The street pins and travels sideways as you scroll (js/scenes.js sets --p). Nothing sits on top of the photo. */
+.band { position: relative; z-index: 1; overflow: clip; --strip-h: min(clamp(220px, max(40vw, 42svh), 580px), calc(100svh - var(--nav-h) - 2rem)); height: calc(var(--strip-h) + 90vh); }
+/* The street holds in the middle of the screen while it travels end to end, then lets go. */
 .strip {
-  height: clamp(220px, 40vw, 580px); overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 84%, transparent); mask-image: linear-gradient(180deg, transparent, #000 22%, #000 84%, transparent);
+  position: sticky; top: calc(var(--nav-h) + (100svh - var(--nav-h) - var(--strip-h)) / 2); height: var(--strip-h); overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent);
 }
 .strip-roll { display: flex; width: max-content; height: 100%; transform: translate3d(calc(var(--p) * (100vw - 100%)), 0, 0); will-change: transform; }
 .strip-shot { position: relative; flex: none; height: 100%; aspect-ratio: 21 / 9; }
@@ -687,6 +688,8 @@ footer { position: relative; }
   .js .rv:not(.in) { opacity: 1; transform: none; filter: none; }
   .js .agent.rv:not(.in) .agent-face img { transform: none; filter: none; }
   .shimmer { -webkit-mask-image: none; mask-image: none; }
+  .band { height: auto; }
+  .strip { position: static; }
   .break-photo { clip-path: none; }
   .break-photo img { transform: none; }
   .laptop-lid { transform: none; }
