@@ -564,6 +564,27 @@ footer { position: relative; }
   .sec-head h2, .proj-body h3, .agent h3 { font-stretch: 100%; }
 }
 
+/* ---------- Scene break: the Strip outside ----------
+   The street travels sideways as the break passes (js/scenes.js sets --p). Nothing sits on top of the photo. */
+.band { position: relative; z-index: 1; overflow: clip; }
+.strip {
+  height: clamp(220px, 40vw, 580px); overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 84%, transparent); mask-image: linear-gradient(180deg, transparent, #000 22%, #000 84%, transparent);
+}
+.strip-roll { display: flex; width: max-content; height: 100%; transform: translate3d(calc(var(--p) * (100vw - 100%)), 0, 0); will-change: transform; }
+.strip-shot { position: relative; flex: none; height: 100%; aspect-ratio: 21 / 9; }
+.strip-shot > img { width: 100%; height: 100%; object-fit: cover; }
+.strip-shot + .strip-shot { margin-left: -12vw; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12vw); mask-image: linear-gradient(90deg, transparent, #000 12vw); }
+/* The album is printed on the blank billboard in the second view. Its box is placed over the billboard face, and the type scales with it. */
+.billboard {
+  position: absolute; left: 33.3%; top: 19.2%; width: 27.5%; height: 20.3%; container-type: size; overflow: hidden;
+  display: flex; align-items: stretch; background: #0d080b; box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.14);
+}
+.billboard::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, oklch(100% 0 0 / 0.16), transparent 42%); }
+.billboard img { flex: none; height: 100%; width: auto; aspect-ratio: 1; object-fit: cover; }
+.billboard p { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding-inline: 7cqh; color: var(--tx); font-weight: 800; font-stretch: 112%; text-transform: uppercase; line-height: 1; }
+.billboard b { font-weight: inherit; font-size: 19cqh; letter-spacing: -0.01em; }
+.billboard span { margin-top: 7cqh; font-size: 9cqh; font-stretch: 125%; letter-spacing: 0.06em; color: var(--gold); }
 /* ---------- The record ---------- */
 .album { overflow: clip; }
 .album-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center; }
