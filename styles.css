@@ -575,7 +575,10 @@ footer { position: relative; }
 .strip-roll { display: flex; width: max-content; height: 100%; transform: translate3d(calc(var(--p) * (100vw - 100%)), 0, 0); will-change: transform; }
 .strip-shot { position: relative; flex: none; height: 100%; aspect-ratio: 21 / 9; }
 .strip-shot > img { width: 100%; height: 100%; object-fit: cover; }
-.strip-shot + .strip-shot { margin-left: -12vw; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12vw); mask-image: linear-gradient(90deg, transparent, #000 12vw); }
+.strip-shot + .strip-shot { margin-left: 0; }
+.whisky-marquee { position: absolute; left: 10.15%; top: 54%; width: 12.25%; height: 6.5%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #302117; font: bold clamp(5px, 1vw, 15px)/1.25 Arial, sans-serif; letter-spacing: .08em; background: #f3dfb6; transform: rotate(.5deg); }
+.whisky-marquee b { font-size: 1em; }
+.whisky-marquee span { font-size: .8em; }
 /* The album is printed on the blank billboard in the second view. Its box is placed over the billboard face, and the type scales with it. */
 .billboard {
   position: absolute; left: 33.3%; top: 19.2%; width: 27.5%; height: 20.3%; container-type: size; overflow: hidden;
